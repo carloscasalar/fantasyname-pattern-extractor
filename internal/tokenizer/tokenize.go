@@ -1,9 +1,12 @@
 package tokenizer
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 func Tokenize(value string) ([][]Token, error) {
-	// if the string starts with a consonant, the first token is InitialConsonant
+	value = strings.ToLower(value)
 	if isConsonant(value[0]) {
 		return [][]Token{{TokenInitialConsonant}}, nil
 	}
@@ -11,25 +14,25 @@ func Tokenize(value string) ([][]Token, error) {
 }
 
 func isConsonant(value uint8) bool {
-	return value == 'B' ||
-		value == 'C' ||
-		value == 'D' ||
-		value == 'F' ||
-		value == 'G' ||
-		value == 'H' ||
-		value == 'J' ||
-		value == 'K' ||
-		value == 'L' ||
-		value == 'M' ||
-		value == 'N' ||
-		value == 'P' ||
-		value == 'Q' ||
-		value == 'R' ||
-		value == 'S' ||
-		value == 'T' ||
-		value == 'V' ||
-		value == 'W' ||
-		value == 'X' ||
-		value == 'Y' ||
-		value == 'Z'
+	return value == 'b' ||
+		value == 'c' ||
+		value == 'd' ||
+		value == 'f' ||
+		value == 'g' ||
+		value == 'h' ||
+		value == 'j' ||
+		value == 'k' ||
+		value == 'l' ||
+		value == 'm' ||
+		value == 'n' ||
+		value == 'p' ||
+		value == 'q' ||
+		value == 'r' ||
+		value == 's' ||
+		value == 't' ||
+		value == 'v' ||
+		value == 'w' ||
+		value == 'x' ||
+		value == 'y' ||
+		value == 'z'
 }
