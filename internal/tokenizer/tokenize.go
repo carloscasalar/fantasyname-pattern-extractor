@@ -1,21 +1,25 @@
 package tokenizer
 
 import (
-	"errors"
 	"strings"
 )
 
 func Tokenize(value string) ([][]Token, error) {
 	value = strings.ToLower(value)
+	tokenChain := make([]Token, len(value))
 	if isConsonant(value[0]) {
-		return [][]Token{{TokenInitialConsonant}}, nil
+		tokenChain[0] = TokenInitialConsonant
 	}
 
 	if isVowel(value[0]) {
-		return [][]Token{{TokenVowel}}, nil
+		tokenChain[0] = TokenVowel
 	}
 
-	return nil, errors.New("case not implemented yet")
+	if len(value) > 1 && isVowel(value[1]) {
+		tokenChain[1] = TokenVowel
+	}
+
+	return [][]Token{tokenChain}, nil
 }
 
 func isVowel(value uint8) bool {
