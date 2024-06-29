@@ -1,4 +1,4 @@
-module github.com/carloscasalar/fantasy-pattern-extractor
+module github.com/carloscasalar/fantasyname-pattern-extractor
 
 go 1.17
 
