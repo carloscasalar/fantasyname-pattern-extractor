@@ -4,31 +4,32 @@ import (
 	"strings"
 )
 
-func Tokenize(value string) ([][]Token, error) {
+func Tokenize(value string) ([]TokenChain, error) {
 	value = strings.ToLower(value)
-	tokenChain := make([]Token, 0)
+	var chain TokenChain
+	chain = NewEmptyTokenChain()
 
 	for i := 0; i < len(value); i++ {
 		var err error
 		char := value[i]
-		tokenChain, err = extractToken(tokenChain, char)
+		chain, err = appendToken(chain, char)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return [][]Token{tokenChain}, nil
+	return []TokenChain{chain}, nil
 }
 
-func extractToken(contextChain []Token, nextChar uint8) ([]Token, error) {
+func appendToken(contextChain TokenChain, nextChar uint8) (TokenChain, error) {
 	if isVowel(nextChar) {
-		return append(contextChain, TokenVowel), nil
+		return contextChain.Add(TokenVowel), nil
 	}
 	if isConsonant(nextChar) {
-		if len(contextChain) == 0 {
-			return append(contextChain, TokenInitialConsonant), nil
+		if contextChain.IsEmpty() {
+			return contextChain.Add(TokenInitialConsonant), nil
 		}
-		return append(contextChain, TokenMiddleConsonant), nil
+		return contextChain.Add(TokenMiddleConsonant), nil
 	}
 
 	return contextChain, nil
