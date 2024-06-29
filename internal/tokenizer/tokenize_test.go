@@ -2,10 +2,11 @@ package tokenizer_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/tokenizer"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func Test_given_string_starting_with_the_consonant(t *testing.T) {
