@@ -21,26 +21,17 @@ func Tokenize(value string) ([][]Token, error) {
 }
 
 func extractToken(contextChain []Token, nextChar uint8) ([]Token, error) {
-	if len(contextChain) == 0 {
-		if isConsonant(nextChar) {
+	if isVowel(nextChar) {
+		return append(contextChain, TokenVowel), nil
+	}
+	if isConsonant(nextChar) {
+		if len(contextChain) == 0 {
 			return append(contextChain, TokenInitialConsonant), nil
 		}
-		if isVowel(nextChar) {
-			return append(contextChain, TokenVowel), nil
-		}
-	}
-
-	if len(contextChain) == 1 {
-		if isConsonant(nextChar) {
-			return append(contextChain, TokenMiddleConsonant), nil
-		}
-		if isVowel(nextChar) {
-			return append(contextChain, TokenVowel), nil
-		}
+		return append(contextChain, TokenMiddleConsonant), nil
 	}
 
 	return contextChain, nil
-
 }
 
 func isVowel(value uint8) bool {
