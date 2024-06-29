@@ -6,24 +6,41 @@ import (
 
 func Tokenize(value string) ([][]Token, error) {
 	value = strings.ToLower(value)
-	tokenChain := make([]Token, len(value))
-	if isConsonant(value[0]) {
-		tokenChain[0] = TokenInitialConsonant
-	}
+	tokenChain := make([]Token, 0)
 
-	if isVowel(value[0]) {
-		tokenChain[0] = TokenVowel
-	}
-
-	if len(value) > 1 && isVowel(value[1]) {
-		tokenChain[1] = TokenVowel
-	}
-
-	if len(value) > 1 && isConsonant(value[1]) {
-		tokenChain[1] = TokenMiddleConsonant
+	for i := 0; i < len(value); i++ {
+		var err error
+		char := value[i]
+		tokenChain, err = extractToken(tokenChain, char)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return [][]Token{tokenChain}, nil
+}
+
+func extractToken(contextChain []Token, nextChar uint8) ([]Token, error) {
+	if len(contextChain) == 0 {
+		if isConsonant(nextChar) {
+			return append(contextChain, TokenInitialConsonant), nil
+		}
+		if isVowel(nextChar) {
+			return append(contextChain, TokenVowel), nil
+		}
+	}
+
+	if len(contextChain) == 1 {
+		if isConsonant(nextChar) {
+			return append(contextChain, TokenMiddleConsonant), nil
+		}
+		if isVowel(nextChar) {
+			return append(contextChain, TokenVowel), nil
+		}
+	}
+
+	return contextChain, nil
+
 }
 
 func isVowel(value uint8) bool {
