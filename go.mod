@@ -1,4 +1,4 @@
-module github.com/carloscasalar/fantasy-pattern-inferrer
+module github.com/carloscasalar/fantasy-pattern-extractor
 
 go 1.22.4
 

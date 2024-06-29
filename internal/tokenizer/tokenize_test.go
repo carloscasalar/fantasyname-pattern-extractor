@@ -2,7 +2,7 @@ package tokenizer_test
 
 import (
 	"fmt"
-	"github.com/carloscasalar/fantasy-pattern-inferrer/internal/tokenizer"
+	"github.com/carloscasalar/fantasy-pattern-extractor/internal/tokenizer"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
