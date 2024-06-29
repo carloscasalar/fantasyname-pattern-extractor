@@ -5,4 +5,5 @@ type Token int
 const (
 	Illegal Token = iota
 	TokenInitialConsonant
+	TokenVowel
 )
