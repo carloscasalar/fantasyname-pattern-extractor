@@ -6,6 +6,34 @@ type TokenChain interface {
 	AddChar(uint8) (TokenChain, error)
 }
 
+type EmptyTokenChain struct{}
+
+func NewEmptyTokenChain() *EmptyTokenChain {
+	return &EmptyTokenChain{}
+}
+
+func (e EmptyTokenChain) Tokens() []Token {
+	return []Token{}
+}
+
+func (e EmptyTokenChain) IsEmpty() bool {
+	return true
+}
+
+func (e EmptyTokenChain) Add(token Token) TokenChain {
+	return &SingleTokenChain{token: token}
+}
+
+func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
+	if isVowel(char) {
+		return e.Add(TokenVowel), nil
+	}
+	if isConsonant(char) {
+		return e.Add(TokenInitialConsonant), nil
+	}
+	return e, nil
+}
+
 type SingleTokenChain struct {
 	token Token
 }
@@ -58,34 +86,6 @@ func (s SeveralTokenChain) AddChar(char uint8) (TokenChain, error) {
 		return s.Add(TokenMiddleConsonant), nil
 	}
 	return s, nil
-}
-
-type EmptyTokenChain struct{}
-
-func NewEmptyTokenChain() *EmptyTokenChain {
-	return &EmptyTokenChain{}
-}
-
-func (e EmptyTokenChain) Tokens() []Token {
-	return []Token{}
-}
-
-func (e EmptyTokenChain) IsEmpty() bool {
-	return true
-}
-
-func (e EmptyTokenChain) Add(token Token) TokenChain {
-	return &SingleTokenChain{token: token}
-}
-
-func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
-	if isVowel(char) {
-		return e.Add(TokenVowel), nil
-	}
-	if isConsonant(char) {
-		return e.Add(TokenInitialConsonant), nil
-	}
-	return e, nil
 }
 
 func isVowel(value uint8) bool {
