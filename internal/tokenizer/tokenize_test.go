@@ -49,7 +49,7 @@ func Test_given_string_starting_with_a_consonant_and_a_vowel_like(t *testing.T) 
 	}
 
 	for _, input := range testCases {
-		t.Run(fmt.Sprintf("%v, first token should be starting consonant", input), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%v, first token should be starting consonant and second token a vowel", input), func(t *testing.T) {
 			tokens, err := tokenizer.Tokenize(input)
 
 			require.NoError(t, err)
@@ -57,6 +57,24 @@ func Test_given_string_starting_with_a_consonant_and_a_vowel_like(t *testing.T) 
 			require.Len(t, tokens[0], 2, "should have two tokens but has %v", len(tokens[0]))
 			assert.Equal(t, tokenizer.TokenInitialConsonant, tokens[0][0])
 			assert.Equal(t, tokenizer.TokenVowel, tokens[0][1])
+		})
+	}
+}
+
+func Test_given_string_starting_with_a_vowel_and_a_consonant_like(t *testing.T) {
+	testCases := []string{
+		"Ab", "Ep", "Iw", "Oq", "Uz",
+	}
+
+	for _, input := range testCases {
+		t.Run(fmt.Sprintf("%v, first token should be a vowel and the second token a middle consonant", input), func(t *testing.T) {
+			tokens, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			require.Len(t, tokens, 1, "should have only one combination of tokens but has %v", len(tokens))
+			require.Len(t, tokens[0], 2, "should have two tokens but has %v", len(tokens[0]))
+			assert.Equal(t, tokenizer.TokenVowel.String(), tokens[0][0].String())
+			assert.Equal(t, tokenizer.TokenMiddleConsonant.String(), tokens[0][1].String())
 		})
 	}
 }

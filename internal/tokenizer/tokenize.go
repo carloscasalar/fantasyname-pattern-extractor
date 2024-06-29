@@ -19,6 +19,10 @@ func Tokenize(value string) ([][]Token, error) {
 		tokenChain[1] = TokenVowel
 	}
 
+	if len(value) > 1 && isConsonant(value[1]) {
+		tokenChain[1] = TokenMiddleConsonant
+	}
+
 	return [][]Token{tokenChain}, nil
 }
 
