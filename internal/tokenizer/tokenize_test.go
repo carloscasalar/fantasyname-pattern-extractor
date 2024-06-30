@@ -101,6 +101,17 @@ func Test_apostrophe_should_be_translated_to_apostrophe_token(t *testing.T) {
 	assert.Equal(t, tokenizer.TokenApostrophe, tokens[0])
 }
 
+func Test_apostrophe_should_be_translated_to_apostrophe_token_also_in_the_middle_of_a_string(t *testing.T) {
+	tokenChain, err := tokenizer.Tokenize("A'B")
+
+	require.NoError(t, err)
+	tokens := tokenChain.Tokens()
+	require.Len(t, tokens, 3, "should have three tokens but has %v", len(tokenChain.Tokens()))
+	assert.Equal(t, tokenizer.TokenVowel, tokens[0])
+	assert.Equal(t, tokenizer.TokenApostrophe, tokens[1])
+	assert.Equal(t, tokenizer.TokenMiddleConsonant, tokens[2])
+}
+
 func Test_hyphen_should_be_translated_to_hyphen_token(t *testing.T) {
 	tokenChain, err := tokenizer.Tokenize("-")
 

@@ -24,12 +24,15 @@ func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
 		return e.add(TokenVowel), nil
 	}
+
 	if isConsonant(char) {
 		return e.add(TokenInitialConsonant), nil
 	}
+
 	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
 		return e.add(token), nil
 	}
+
 	return e, nil
 }
 
@@ -53,8 +56,13 @@ func (s SingleTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
 		return s.add(TokenVowel), nil
 	}
+
 	if isConsonant(char) {
 		return s.add(TokenMiddleConsonant), nil
+	}
+
+	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
+		return s.add(token), nil
 	}
 
 	return s, nil
@@ -80,9 +88,15 @@ func (s SeveralTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
 		return s.add(TokenVowel), nil
 	}
+
 	if isConsonant(char) {
 		return s.add(TokenMiddleConsonant), nil
 	}
+
+	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
+		return s.add(token), nil
+	}
+
 	return s, nil
 }
 
