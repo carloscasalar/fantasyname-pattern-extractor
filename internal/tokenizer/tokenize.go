@@ -4,10 +4,9 @@ import (
 	"strings"
 )
 
-func Tokenize(value string) (TokenChain, error) {
+func Tokenize(value string) (*TokenChain, error) {
 	value = strings.ToLower(value)
-	var chain TokenChain
-	chain = NewEmptyTokenChain()
+	chain := NewEmptyTokenChain()
 
 	for i := 0; i < len(value); i++ {
 		var err error

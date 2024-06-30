@@ -4,8 +4,7 @@ type Token int
 
 const (
 	NoToken Token = iota
-	TokenInitialConsonant
-	TokenMiddleConsonant
+	TokenConsonant
 	TokenVowel
 	TokenApostrophe
 	TokenHyphen
@@ -13,12 +12,11 @@ const (
 
 func (t Token) String() string {
 	tokenStrings := map[Token]string{
-		NoToken:               "NoToken",
-		TokenInitialConsonant: "InitialConsonant",
-		TokenMiddleConsonant:  "MiddleConsonant",
-		TokenVowel:            "Vowel",
-		TokenApostrophe:       "Apostrophe",
-		TokenHyphen:           "Hyphen",
+		NoToken:         "NoToken",
+		TokenConsonant:  "Consonant",
+		TokenVowel:      "Vowel",
+		TokenApostrophe: "Apostrophe",
+		TokenHyphen:     "Hyphen",
 	}
 
 	if str, found := tokenStrings[t]; found {

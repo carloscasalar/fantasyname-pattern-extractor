@@ -1,106 +1,38 @@
 package tokenizer
 
-type TokenChain interface {
-	Tokens() []Token
-	IsEmpty() bool
-	AddChar(uint8) (TokenChain, error)
+func NewEmptyTokenChain() *TokenChain {
+	return &TokenChain{}
 }
 
-type EmptyTokenChain struct{}
-
-func NewEmptyTokenChain() *EmptyTokenChain {
-	return &EmptyTokenChain{}
-}
-
-func (e EmptyTokenChain) Tokens() []Token {
-	return []Token{}
-}
-
-func (e EmptyTokenChain) add(token Token) TokenChain {
-	return &SingleTokenChain{token: token}
-}
-
-func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
-	if isVowel(char) {
-		return e.add(TokenVowel), nil
-	}
-
-	if isConsonant(char) {
-		return e.add(TokenInitialConsonant), nil
-	}
-
-	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
-		return e.add(token), nil
-	}
-
-	return e, nil
-}
-
-func (e EmptyTokenChain) IsEmpty() bool {
-	return true
-}
-
-type SingleTokenChain struct {
-	token Token
-}
-
-func (s SingleTokenChain) Tokens() []Token {
-	return []Token{s.token}
-}
-
-func (s SingleTokenChain) IsEmpty() bool {
-	return false
-}
-
-func (s SingleTokenChain) AddChar(char uint8) (TokenChain, error) {
-	if isVowel(char) {
-		return s.add(TokenVowel), nil
-	}
-
-	if isConsonant(char) {
-		return s.add(TokenMiddleConsonant), nil
-	}
-
-	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
-		return s.add(token), nil
-	}
-
-	return s, nil
-}
-
-func (s SingleTokenChain) add(token Token) TokenChain {
-	return &SeveralTokenChain{tokens: []Token{s.token, token}}
-}
-
-type SeveralTokenChain struct {
+type TokenChain struct {
 	tokens []Token
 }
 
-func (s SeveralTokenChain) Tokens() []Token {
+func (s TokenChain) Tokens() []Token {
 	return s.tokens
 }
 
-func (s SeveralTokenChain) IsEmpty() bool {
+func (s TokenChain) IsEmpty() bool {
 	return false
 }
 
-func (s SeveralTokenChain) AddChar(char uint8) (TokenChain, error) {
+func (s TokenChain) AddChar(char uint8) (*TokenChain, error) {
 	if isVowel(char) {
 		return s.add(TokenVowel), nil
 	}
 
 	if isConsonant(char) {
-		return s.add(TokenMiddleConsonant), nil
+		return s.add(TokenConsonant), nil
 	}
 
 	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
 		return s.add(token), nil
 	}
 
-	return s, nil
+	return &s, nil
 }
 
-func (s SeveralTokenChain) add(token Token) TokenChain {
+func (s TokenChain) add(token Token) *TokenChain {
 	s.tokens = append(s.tokens, token)
 	return &s
 }
