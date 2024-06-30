@@ -1,19 +1,15 @@
 package tokenizer
 
-func NewEmptyTokenChain() *TokenChain {
-	return &TokenChain{}
-}
-
 type TokenChain struct {
 	tokens []Token
 }
 
-func (s TokenChain) Tokens() []Token {
-	return s.tokens
+func NewEmptyTokenChain() *TokenChain {
+	return &TokenChain{}
 }
 
-func (s TokenChain) IsEmpty() bool {
-	return false
+func (s TokenChain) Tokens() []Token {
+	return s.tokens
 }
 
 func (s TokenChain) AddChar(char uint8) (*TokenChain, error) {
