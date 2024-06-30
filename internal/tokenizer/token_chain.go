@@ -126,6 +126,7 @@ func isConsonant(value uint8) bool {
 func symbolToken(char uint8) (Token, bool) {
 	symbolTokens := map[uint8]Token{
 		'\'': TokenApostrophe,
+		'-':  TokenHyphen,
 	}
 
 	token, hasToken := symbolTokens[char]

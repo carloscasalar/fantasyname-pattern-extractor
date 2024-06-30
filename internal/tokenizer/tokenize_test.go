@@ -100,3 +100,12 @@ func Test_apostrophe_should_be_translated_to_apostrophe_token(t *testing.T) {
 	require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
 	assert.Equal(t, tokenizer.TokenApostrophe, tokens[0])
 }
+
+func Test_hyphen_should_be_translated_to_hyphen_token(t *testing.T) {
+	tokenChain, err := tokenizer.Tokenize("-")
+
+	require.NoError(t, err)
+	tokens := tokenChain.Tokens()
+	require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+	assert.Equal(t, tokenizer.TokenHyphen, tokens[0])
+}
