@@ -16,22 +16,22 @@ func (e EmptyTokenChain) Tokens() []Token {
 	return []Token{}
 }
 
-func (e EmptyTokenChain) IsEmpty() bool {
-	return true
-}
-
-func (e EmptyTokenChain) Add(token Token) TokenChain {
+func (e EmptyTokenChain) add(token Token) TokenChain {
 	return &SingleTokenChain{token: token}
 }
 
 func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
-		return e.Add(TokenVowel), nil
+		return e.add(TokenVowel), nil
 	}
 	if isConsonant(char) {
-		return e.Add(TokenInitialConsonant), nil
+		return e.add(TokenInitialConsonant), nil
 	}
 	return e, nil
+}
+
+func (e EmptyTokenChain) IsEmpty() bool {
+	return true
 }
 
 type SingleTokenChain struct {
@@ -46,19 +46,19 @@ func (s SingleTokenChain) IsEmpty() bool {
 	return false
 }
 
-func (s SingleTokenChain) Add(token Token) TokenChain {
-	return &SeveralTokenChain{tokens: []Token{s.token, token}}
-}
-
 func (s SingleTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
-		return s.Add(TokenVowel), nil
+		return s.add(TokenVowel), nil
 	}
 	if isConsonant(char) {
-		return s.Add(TokenMiddleConsonant), nil
+		return s.add(TokenMiddleConsonant), nil
 	}
 
 	return s, nil
+}
+
+func (s SingleTokenChain) add(token Token) TokenChain {
+	return &SeveralTokenChain{tokens: []Token{s.token, token}}
 }
 
 type SeveralTokenChain struct {
@@ -73,19 +73,19 @@ func (s SeveralTokenChain) IsEmpty() bool {
 	return false
 }
 
-func (s SeveralTokenChain) Add(token Token) TokenChain {
-	s.tokens = append(s.tokens, token)
-	return &s
-}
-
 func (s SeveralTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isVowel(char) {
-		return s.Add(TokenVowel), nil
+		return s.add(TokenVowel), nil
 	}
 	if isConsonant(char) {
-		return s.Add(TokenMiddleConsonant), nil
+		return s.add(TokenMiddleConsonant), nil
 	}
 	return s, nil
+}
+
+func (s SeveralTokenChain) add(token Token) TokenChain {
+	s.tokens = append(s.tokens, token)
+	return &s
 }
 
 func isVowel(value uint8) bool {
