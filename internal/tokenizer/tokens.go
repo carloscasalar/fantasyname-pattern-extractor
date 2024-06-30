@@ -7,6 +7,7 @@ const (
 	TokenInitialConsonant
 	TokenMiddleConsonant
 	TokenVowel
+	TokenApostrophe
 )
 
 func (t Token) String() string {
@@ -15,6 +16,7 @@ func (t Token) String() string {
 		TokenInitialConsonant: "InitialConsonant",
 		TokenMiddleConsonant:  "MiddleConsonant",
 		TokenVowel:            "Vowel",
+		TokenApostrophe:       "Apostrophe",
 	}
 
 	if str, found := tokenStrings[t]; found {

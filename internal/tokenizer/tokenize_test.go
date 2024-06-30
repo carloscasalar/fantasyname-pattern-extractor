@@ -91,3 +91,12 @@ func Test_given_string_starting_with_two_consonants_first_token_should_be_starti
 	assert.Equal(t, tokenizer.TokenInitialConsonant, tokens[0])
 	assert.Equal(t, tokenizer.TokenMiddleConsonant, tokens[1])
 }
+
+func Test_apostrophe_should_be_translated_to_apostrophe_token(t *testing.T) {
+	tokenChain, err := tokenizer.Tokenize("'")
+
+	require.NoError(t, err)
+	tokens := tokenChain.Tokens()
+	require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+	assert.Equal(t, tokenizer.TokenApostrophe, tokens[0])
+}

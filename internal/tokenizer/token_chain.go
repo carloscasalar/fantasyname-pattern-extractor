@@ -27,6 +27,9 @@ func (e EmptyTokenChain) AddChar(char uint8) (TokenChain, error) {
 	if isConsonant(char) {
 		return e.add(TokenInitialConsonant), nil
 	}
+	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
+		return e.add(token), nil
+	}
 	return e, nil
 }
 
@@ -118,4 +121,13 @@ func isConsonant(value uint8) bool {
 		value == 'x' ||
 		value == 'y' ||
 		value == 'z'
+}
+
+func symbolToken(char uint8) (Token, bool) {
+	symbolTokens := map[uint8]Token{
+		'\'': TokenApostrophe,
+	}
+
+	token, hasToken := symbolTokens[char]
+	return token, hasToken
 }
