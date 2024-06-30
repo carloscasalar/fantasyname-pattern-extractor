@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func Tokenize(value string) ([]TokenChain, error) {
+func Tokenize(value string) (TokenChain, error) {
 	value = strings.ToLower(value)
 	var chain TokenChain
 	chain = NewEmptyTokenChain()
@@ -18,5 +18,5 @@ func Tokenize(value string) ([]TokenChain, error) {
 		}
 	}
 
-	return []TokenChain{chain}, nil
+	return chain, nil
 }
