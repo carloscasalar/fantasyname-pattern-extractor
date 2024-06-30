@@ -83,3 +83,14 @@ func Test_given_string_starting_with_a_vowel_and_a_consonant_like(t *testing.T) 
 		})
 	}
 }
+
+func Test_given_string_starting_with_two_consonants_first_token_should_be_starting_consonant_and_second_middle_consonant(t *testing.T) {
+	tokenChains, err := tokenizer.Tokenize("Kr")
+
+	require.NoError(t, err)
+	require.Len(t, tokenChains, 1, "should have only one combination of tokens but has %v", len(tokenChains))
+	require.Len(t, tokenChains[0].Tokens(), 2, "should have two tokens but has %v", len(tokenChains[0].Tokens()))
+	tokens := tokenChains[0].Tokens()
+	assert.Equal(t, tokenizer.TokenInitialConsonant, tokens[0])
+	assert.Equal(t, tokenizer.TokenMiddleConsonant, tokens[1])
+}
