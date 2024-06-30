@@ -21,6 +21,10 @@ func (s TokenChain) AddChar(char uint8) (*TokenChain, error) {
 		return s.add(TokenVowel), nil
 	}
 
+	if isAcuteAccentedVowel(char) {
+		return s.add(TokenVowelAcuteAccented), nil
+	}
+
 	if isConsonant(char) {
 		return s.add(TokenConsonant), nil
 	}
@@ -43,6 +47,14 @@ func isVowel(value uint8) bool {
 		value == 'i' ||
 		value == 'o' ||
 		value == 'u'
+}
+
+func isAcuteAccentedVowel(char uint8) bool {
+	return char == "á"[0] ||
+		char == "é"[0] ||
+		char == "í"[0] ||
+		char == "ó"[0] ||
+		char == "ú"[0]
 }
 
 func isConsonant(value uint8) bool {

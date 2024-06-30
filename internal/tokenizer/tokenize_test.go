@@ -110,3 +110,18 @@ func Test_apostrophe_should_be_translated_to_apostrophe_token_also_in_the_middle
 	assert.Equal(t, tokenizer.TokenApostrophe, tokens[1])
 	assert.Equal(t, tokenizer.TokenConsonant, tokens[2])
 }
+
+func Test_acute_accented_vowel_should_be_translated_acute_accented_vowel_token(t *testing.T) {
+	testVowels := []string{"á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú"}
+
+	for _, input := range testVowels {
+		t.Run(fmt.Sprintf("%v, should be translated to acute accented vowel token", input), func(t *testing.T) {
+			tokenChain, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			tokens := tokenChain.Tokens()
+			require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+			assert.Equal(t, tokenizer.TokenVowelAcuteAccented, tokens[0])
+		})
+	}
+}
