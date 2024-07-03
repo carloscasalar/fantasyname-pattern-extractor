@@ -7,6 +7,7 @@ const (
 	TokenConsonant
 	TokenVowel
 	TokenVowelAcuteAccented
+	TokenVowelGraveAccented
 	TokenApostrophe
 	TokenHyphen
 )
@@ -17,6 +18,7 @@ func (t Token) String() string {
 		TokenConsonant:          "Consonant",
 		TokenVowel:              "Vowel",
 		TokenVowelAcuteAccented: "VowelAcuteAccented",
+		TokenVowelGraveAccented: "VowelGraveAccented",
 		TokenApostrophe:         "Apostrophe",
 		TokenHyphen:             "Hyphen",
 	}

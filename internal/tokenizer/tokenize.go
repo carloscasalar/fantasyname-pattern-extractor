@@ -1,17 +1,11 @@
 package tokenizer
 
-import (
-	"strings"
-)
-
 func Tokenize(value string) (*TokenChain, error) {
-	value = strings.ToLower(value)
 	chain := NewEmptyTokenChain()
 
-	for i := 0; i < len(value); i++ {
+	for _, r := range value {
 		var err error
-		char := value[i]
-		chain, err = chain.AddChar(char)
+		chain, err = chain.AddChar(r)
 		if err != nil {
 			return nil, err
 		}

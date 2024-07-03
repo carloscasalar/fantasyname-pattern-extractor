@@ -1,5 +1,7 @@
 package tokenizer
 
+import "unicode"
+
 type TokenChain struct {
 	tokens []Token
 }
@@ -12,20 +14,24 @@ func (s TokenChain) Tokens() []Token {
 	return s.tokens
 }
 
-func (s TokenChain) AddChar(char uint8) (*TokenChain, error) {
-	if isVowel(char) {
+func (s TokenChain) AddChar(r rune) (*TokenChain, error) {
+	if isPlainVowel(r) {
 		return s.add(TokenVowel), nil
 	}
 
-	if isAcuteAccentedVowel(char) {
+	if isAcuteVowel(r) {
 		return s.add(TokenVowelAcuteAccented), nil
 	}
 
-	if isConsonant(char) {
+	if isGraveVowel(r) {
+		return s.add(TokenVowelGraveAccented), nil
+	}
+
+	if isConsonant(r) {
 		return s.add(TokenConsonant), nil
 	}
 
-	if token, hasTokenTranslation := symbolToken(char); hasTokenTranslation {
+	if token, hasTokenTranslation := symbolToken(r); hasTokenTranslation {
 		return s.add(token), nil
 	}
 
@@ -37,52 +43,40 @@ func (s TokenChain) add(token Token) *TokenChain {
 	return &s
 }
 
-func isVowel(value uint8) bool {
-	return value == 'a' ||
-		value == 'e' ||
-		value == 'i' ||
-		value == 'o' ||
-		value == 'u'
+func isConsonant(r rune) bool {
+	return unicode.IsLetter(r) && !isVowel(r)
 }
 
-func isAcuteAccentedVowel(char uint8) bool {
-	return char == "á"[0] ||
-		char == "é"[0] ||
-		char == "í"[0] ||
-		char == "ó"[0] ||
-		char == "ú"[0]
+func isVowel(r rune) bool {
+	return isPlainVowel(r) || isAcuteVowel(r) || isGraveVowel(r) || isDiaeresisVowel(r)
 }
 
-func isConsonant(value uint8) bool {
-	return value == 'b' ||
-		value == 'c' ||
-		value == 'd' ||
-		value == 'f' ||
-		value == 'g' ||
-		value == 'h' ||
-		value == 'j' ||
-		value == 'k' ||
-		value == 'l' ||
-		value == 'm' ||
-		value == 'n' ||
-		value == 'p' ||
-		value == 'q' ||
-		value == 'r' ||
-		value == 's' ||
-		value == 't' ||
-		value == 'v' ||
-		value == 'w' ||
-		value == 'x' ||
-		value == 'y' ||
-		value == 'z'
+func isPlainVowel(r rune) bool {
+	return r == 'a' || r == 'e' || r == 'i' || r == 'o' || r == 'u' ||
+		r == 'A' || r == 'E' || r == 'I' || r == 'O' || r == 'U'
 }
 
-func symbolToken(char uint8) (Token, bool) {
-	symbolTokens := map[uint8]Token{
+func isAcuteVowel(r rune) bool {
+	return r == 'á' || r == 'é' || r == 'í' || r == 'ó' || r == 'ú' ||
+		r == 'Á' || r == 'É' || r == 'Í' || r == 'Ó' || r == 'Ú'
+}
+
+func isGraveVowel(r rune) bool {
+	return r == 'à' || r == 'è' || r == 'ì' || r == 'ò' || r == 'ù' ||
+		r == 'À' || r == 'È' || r == 'Ì' || r == 'Ò' || r == 'Ù'
+}
+
+func isDiaeresisVowel(r rune) bool {
+	return r == 'ä' || r == 'ë' || r == 'ï' || r == 'ö' || r == 'ü' ||
+		r == 'Ä' || r == 'Ë' || r == 'Ï' || r == 'Ö' || r == 'Ü'
+}
+
+func symbolToken(r rune) (Token, bool) {
+	symbolTokens := map[rune]Token{
 		'\'': TokenApostrophe,
 		'-':  TokenHyphen,
 	}
 
-	token, hasToken := symbolTokens[char]
+	token, hasToken := symbolTokens[r]
 	return token, hasToken
 }
