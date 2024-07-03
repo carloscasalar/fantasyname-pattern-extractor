@@ -31,6 +31,10 @@ func (s TokenChain) AddChar(r rune) (*TokenChain, error) {
 		return s.add(TokenVowelCircumflexAccented), nil
 	}
 
+	if isDiaeresisVowel(r) {
+		return s.add(TokenVowelDieresisAccented), nil
+	}
+
 	if isTildeN(r) {
 		return s.add(TokenTildeN), nil
 	}
@@ -60,7 +64,8 @@ func isTildeN(r rune) bool {
 }
 
 func isVowel(r rune) bool {
-	return isPlainVowel(r) || isAcuteVowel(r) || isGraveVowel(r) || isDiaeresisVowel(r) || isCircumflexVowel(r)
+	return isPlainVowel(r) || isAcuteVowel(r) || isGraveVowel(r) || isDiaeresisVowel(r) ||
+		isCircumflexVowel(r) || isDieresisVowel(r)
 }
 
 func isPlainVowel(r rune) bool {
@@ -84,6 +89,11 @@ func isCircumflexVowel(r rune) bool {
 }
 
 func isDiaeresisVowel(r rune) bool {
+	return r == 'ä' || r == 'ë' || r == 'ï' || r == 'ö' || r == 'ü' ||
+		r == 'Ä' || r == 'Ë' || r == 'Ï' || r == 'Ö' || r == 'Ü'
+}
+
+func isDieresisVowel(r rune) bool {
 	return r == 'ä' || r == 'ë' || r == 'ï' || r == 'ö' || r == 'ü' ||
 		r == 'Ä' || r == 'Ë' || r == 'Ï' || r == 'Ö' || r == 'Ü'
 }

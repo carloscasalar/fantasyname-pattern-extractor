@@ -167,6 +167,21 @@ func Test_circumflex_accented_vowel_should_be_translated_grave_accented_vowel_to
 	}
 }
 
+func Test_vowel_with_dieresis_should_be_translated_to_dieresis_vowel_token(t *testing.T) {
+	testVowels := []string{"ä", "ë", "ï", "ö", "ü", "Ä", "Ë", "Ï", "Ö", "Ü"}
+
+	for _, input := range testVowels {
+		t.Run(fmt.Sprintf("%v, should be translated to dieresis vowel token", input), func(t *testing.T) {
+			tokenChain, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			tokens := tokenChain.Tokens()
+			require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+			assert.Equal(t, tokenizer.TokenVowelDieresisAccented.String(), tokens[0].String())
+		})
+	}
+}
+
 func Test_tilde_with_n_on_top_should_be_translated_to_tilde_n_token(t *testing.T) {
 	testCases := []string{"ñ", "Ñ"}
 
