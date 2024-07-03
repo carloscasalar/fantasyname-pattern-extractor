@@ -31,6 +31,10 @@ func (s TokenChain) AddChar(r rune) (*TokenChain, error) {
 		return s.add(TokenVowelCircumflexAccented), nil
 	}
 
+	if isTildeN(r) {
+		return s.add(TokenTildeN), nil
+	}
+
 	if isConsonant(r) {
 		return s.add(TokenConsonant), nil
 	}
@@ -51,8 +55,12 @@ func isConsonant(r rune) bool {
 	return unicode.IsLetter(r) && !isVowel(r)
 }
 
+func isTildeN(r rune) bool {
+	return r == 'ñ' || r == 'Ñ'
+}
+
 func isVowel(r rune) bool {
-	return isPlainVowel(r) || isAcuteVowel(r) || isGraveVowel(r) || isDiaeresisVowel(r)
+	return isPlainVowel(r) || isAcuteVowel(r) || isGraveVowel(r) || isDiaeresisVowel(r) || isCircumflexVowel(r)
 }
 
 func isPlainVowel(r rune) bool {

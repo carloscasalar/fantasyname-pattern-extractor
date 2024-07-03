@@ -166,3 +166,18 @@ func Test_circumflex_accented_vowel_should_be_translated_grave_accented_vowel_to
 		})
 	}
 }
+
+func Test_tilde_with_n_on_top_should_be_translated_to_tilde_n_token(t *testing.T) {
+	testCases := []string{"ñ", "Ñ"}
+
+	for _, input := range testCases {
+		t.Run(fmt.Sprintf("%v, should be translated to consonant", input), func(t *testing.T) {
+			tokenChain, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			tokens := tokenChain.Tokens()
+			require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+			assert.Equal(t, tokenizer.TokenTildeN.String(), tokens[0].String())
+		})
+	}
+}

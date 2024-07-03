@@ -5,6 +5,7 @@ type Token int
 const (
 	NoToken Token = iota
 	TokenConsonant
+	TokenTildeN
 	TokenVowel
 	TokenVowelAcuteAccented
 	TokenVowelGraveAccented
@@ -17,6 +18,7 @@ func (t Token) String() string {
 	tokenStrings := map[Token]string{
 		NoToken:                      "NoToken",
 		TokenConsonant:               "Consonant",
+		TokenTildeN:                  "TildeN",
 		TokenVowel:                   "Vowel",
 		TokenVowelAcuteAccented:      "VowelAcuteAccented",
 		TokenVowelGraveAccented:      "VowelGraveAccented",
