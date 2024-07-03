@@ -151,3 +151,18 @@ func Test_grave_accented_vowel_should_be_translated_grave_accented_vowel_token(t
 		})
 	}
 }
+
+func Test_circumflex_accented_vowel_should_be_translated_grave_accented_vowel_token(t *testing.T) {
+	testVowels := []string{"â", "ê", "î", "ô", "û", "Â", "Ê", "Î", "Ô", "Û"}
+
+	for _, input := range testVowels {
+		t.Run(fmt.Sprintf("%v, should be translated to circumflex accented vowel token", input), func(t *testing.T) {
+			tokenChain, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			tokens := tokenChain.Tokens()
+			require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+			assert.Equal(t, tokenizer.TokenVowelCircumflexAccented.String(), tokens[0].String())
+		})
+	}
+}
