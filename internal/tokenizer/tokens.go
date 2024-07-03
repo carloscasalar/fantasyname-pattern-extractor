@@ -6,6 +6,7 @@ const (
 	NoToken Token = iota
 	TokenConsonant
 	TokenTildeN
+	TokenCedilla
 	TokenVowel
 	TokenVowelAcuteAccented
 	TokenVowelGraveAccented
@@ -20,6 +21,7 @@ func (t Token) String() string {
 		NoToken:                      "NoToken",
 		TokenConsonant:               "Consonant",
 		TokenTildeN:                  "TildeN",
+		TokenCedilla:                 "Cedilla",
 		TokenVowel:                   "Vowel",
 		TokenVowelAcuteAccented:      "VowelAcuteAccented",
 		TokenVowelGraveAccented:      "VowelGraveAccented",

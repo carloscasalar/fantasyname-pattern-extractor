@@ -39,6 +39,10 @@ func (s TokenChain) AddChar(r rune) (*TokenChain, error) {
 		return s.add(TokenTildeN), nil
 	}
 
+	if isCedilla(r) {
+		return s.add(TokenCedilla), nil
+	}
+
 	if isConsonant(r) {
 		return s.add(TokenConsonant), nil
 	}
@@ -61,6 +65,10 @@ func isConsonant(r rune) bool {
 
 func isTildeN(r rune) bool {
 	return r == 'ñ' || r == 'Ñ'
+}
+
+func isCedilla(r rune) bool {
+	return r == 'ç' || r == 'Ç'
 }
 
 func isVowel(r rune) bool {

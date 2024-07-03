@@ -196,3 +196,18 @@ func Test_tilde_with_n_on_top_should_be_translated_to_tilde_n_token(t *testing.T
 		})
 	}
 }
+
+func Test_cedilla_should_be_translated_to_cedilla_token(t *testing.T) {
+	testCases := []string{"ç", "Ç"}
+
+	for _, input := range testCases {
+		t.Run(fmt.Sprintf("%v, should be translated to cedilla token", input), func(t *testing.T) {
+			tokenChain, err := tokenizer.Tokenize(input)
+
+			require.NoError(t, err)
+			tokens := tokenChain.Tokens()
+			require.Len(t, tokens, 1, "should have one token but has %v", len(tokenChain.Tokens()))
+			assert.Equal(t, tokenizer.TokenCedilla.String(), tokens[0].String())
+		})
+	}
+}
