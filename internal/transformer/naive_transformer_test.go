@@ -21,6 +21,10 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.NewTokenChain(tokenizer.TokenConsonant),
 			"!c",
 		},
+		"tilde n at the beginning should translate to !(<c>|ñ)": {
+			tokenizer.NewTokenChain(tokenizer.TokenTildeN),
+			"!(<c>|ñ)",
+		},
 	}
 
 	for name, tc := range testCases {
