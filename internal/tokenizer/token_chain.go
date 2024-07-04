@@ -10,6 +10,10 @@ func NewEmptyTokenChain() *TokenChain {
 	return &TokenChain{}
 }
 
+func NewTokenChain(tokens ...Token) *TokenChain {
+	return &TokenChain{tokens: tokens}
+}
+
 func (s TokenChain) Tokens() []Token {
 	return s.tokens
 }
