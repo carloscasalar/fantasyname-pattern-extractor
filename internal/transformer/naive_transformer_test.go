@@ -17,6 +17,10 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.NewTokenChain(tokenizer.TokenVowel),
 			"!v",
 		},
+		"constant at the beginning should translate to !c": {
+			tokenizer.NewTokenChain(tokenizer.TokenConsonant),
+			"!c",
+		},
 	}
 
 	for name, tc := range testCases {

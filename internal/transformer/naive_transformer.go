@@ -17,6 +17,8 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) string {
 	switch token {
 	case tokenizer.TokenVowel:
 		pattern = "!v"
+	case tokenizer.TokenConsonant:
+		pattern = "!c"
 	default:
 		panic("unhandled default case")
 	}
