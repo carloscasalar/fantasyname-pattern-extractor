@@ -21,6 +21,8 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) string {
 		pattern = "!c"
 	case tokenizer.TokenTildeN:
 		pattern = "!(<c>|ñ)"
+	case tokenizer.TokenCedilla:
+		pattern = "!(<c>|ç)"
 	default:
 		panic("unhandled default case")
 	}
