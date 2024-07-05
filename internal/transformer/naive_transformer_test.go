@@ -25,6 +25,10 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.NewTokenChain(tokenizer.TokenVowelGraveAccented),
 			"(<v>|á|é|í|ó|ú)",
 		},
+		"vowel should circumflex accented to any acute accented vowel": {
+			tokenizer.NewTokenChain(tokenizer.TokenVowelCircumflexAccented),
+			"(<v>|á|é|í|ó|ú)",
+		},
 		"constant at the beginning should translate to c": {
 			tokenizer.NewTokenChain(tokenizer.TokenConsonant),
 			"c",
