@@ -16,13 +16,13 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) string {
 	var pattern string
 	switch token {
 	case tokenizer.TokenVowel:
-		pattern = "!v"
+		pattern = "v"
 	case tokenizer.TokenConsonant:
-		pattern = "!c"
+		pattern = "c"
 	case tokenizer.TokenTildeN:
-		pattern = "!(<c>|ñ)"
+		pattern = "(<c>|ñ)"
 	case tokenizer.TokenCedilla:
-		pattern = "!(<c>|ç)"
+		pattern = "(<c>|ç)"
 	default:
 		panic("unhandled default case")
 	}

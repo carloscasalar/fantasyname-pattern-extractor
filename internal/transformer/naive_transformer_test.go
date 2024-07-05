@@ -13,21 +13,21 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 		tokenChain      *tokenizer.TokenChain
 		expectedPattern string
 	}{
-		"vowel should translate to !v": {
+		"vowel should translate to v": {
 			tokenizer.NewTokenChain(tokenizer.TokenVowel),
-			"!v",
+			"v",
 		},
-		"constant at the beginning should translate to !c": {
+		"constant at the beginning should translate to c": {
 			tokenizer.NewTokenChain(tokenizer.TokenConsonant),
-			"!c",
+			"c",
 		},
-		"tilde n at the beginning should translate to !(<c>|ñ)": {
+		"tilde n at the beginning should translate to (<c>|ñ)": {
 			tokenizer.NewTokenChain(tokenizer.TokenTildeN),
-			"!(<c>|ñ)",
+			"(<c>|ñ)",
 		},
-		"cedilla at the beginning should translate to !(<c>|ç)": {
+		"cedilla at the beginning should translate to (<c>|ç)": {
 			tokenizer.NewTokenChain(tokenizer.TokenCedilla),
-			"!(<c>|ç)",
+			"(<c>|ç)",
 		},
 	}
 
