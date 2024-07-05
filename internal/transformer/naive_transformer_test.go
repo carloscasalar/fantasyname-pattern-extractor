@@ -49,6 +49,10 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.NewTokenChain(tokenizer.TokenApostrophe),
 			"('|)",
 		},
+		"hyphen should translate to hyphen or nothing(-|)": {
+			tokenizer.NewTokenChain(tokenizer.TokenHyphen),
+			"(-|)",
+		},
 	}
 
 	for name, tc := range testCases {

@@ -34,6 +34,8 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 		pattern.Add("(<c>|ç)")
 	case tokenizer.TokenApostrophe:
 		pattern.Add("('|)")
+	case tokenizer.TokenHyphen:
+		pattern.Add("(-|)")
 	}
 
 	return pattern
