@@ -17,6 +17,9 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 	switch token {
 	case tokenizer.TokenVowel:
 		pattern.Add("v")
+
+	case tokenizer.TokenVowelAcuteAccented:
+		pattern.Add("(<v>|á|é|í|ó|ú)")
 	case tokenizer.TokenConsonant:
 		pattern.Add("c")
 	case tokenizer.TokenTildeN:
