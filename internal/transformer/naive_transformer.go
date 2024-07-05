@@ -32,6 +32,8 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 		pattern.Add("(<c>|ñ)")
 	case tokenizer.TokenCedilla:
 		pattern.Add("(<c>|ç)")
+	case tokenizer.TokenApostrophe:
+		pattern.Add("('|)")
 	}
 
 	return pattern

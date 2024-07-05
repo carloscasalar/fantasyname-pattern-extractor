@@ -45,6 +45,10 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.NewTokenChain(tokenizer.TokenCedilla),
 			"(<c>|ç)",
 		},
+		"apostrophe should translate to apostrophe or nothing('|)": {
+			tokenizer.NewTokenChain(tokenizer.TokenApostrophe),
+			"('|)",
+		},
 	}
 
 	for name, tc := range testCases {
