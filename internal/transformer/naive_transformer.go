@@ -21,9 +21,11 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 	case tokenizer.TokenVowelAcuteAccented:
 		pattern.Add("(<v>|á|é|í|ó|ú)")
 	case tokenizer.TokenVowelGraveAccented:
-		pattern.Add("(<v>|á|é|í|ó|ú)")
+		pattern.Add("(<v>|à|è|ì|ò|ù)")
 	case tokenizer.TokenVowelCircumflexAccented:
-		pattern.Add("(<v>|á|é|í|ó|ú)")
+		pattern.Add("(<v>|â|ê|î|ô|û)")
+	case tokenizer.TokenVowelDieresisAccented:
+		pattern.Add("(<v>|ä|ë|ï|ö|ü)")
 	case tokenizer.TokenConsonant:
 		pattern.Add("c")
 	case tokenizer.TokenTildeN:
