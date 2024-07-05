@@ -37,7 +37,7 @@ func Test_naive_transformer_returns_a_symbol_for_each_token(t *testing.T) {
 
 			pattern := naiveTransformer.Transform(*tc.tokenChain)
 
-			assert.Equal(t, tc.expectedPattern, pattern)
+			assert.Equal(t, tc.expectedPattern, pattern.String())
 		})
 	}
 }
