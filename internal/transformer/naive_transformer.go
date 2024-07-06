@@ -16,25 +16,25 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 	var pattern Pattern
 	switch token {
 	case tokenizer.TokenVowel:
-		pattern.add("v")
+		pattern.add(sequenceVowel)
 	case tokenizer.TokenVowelAcuteAccented:
-		pattern.add("(<v>|á|é|í|ó|ú)")
+		pattern.add(sequenceVowelAcuteAccented)
 	case tokenizer.TokenVowelGraveAccented:
-		pattern.add("(<v>|à|è|ì|ò|ù)")
+		pattern.add(sequenceVowelGraveAccented)
 	case tokenizer.TokenVowelCircumflexAccented:
-		pattern.add("(<v>|â|ê|î|ô|û)")
+		pattern.add(sequenceVowelCircumflexAccented)
 	case tokenizer.TokenVowelDieresisAccented:
-		pattern.add("(<v>|ä|ë|ï|ö|ü)")
+		pattern.add(sequenceVowelDieresisAccented)
 	case tokenizer.TokenConsonant:
-		pattern.add("c")
+		pattern.add(sequenceConsonant)
 	case tokenizer.TokenTildeN:
-		pattern.add("(<c>|ñ)")
+		pattern.add(sequenceTildeN)
 	case tokenizer.TokenCedilla:
-		pattern.add("(<c>|ç)")
+		pattern.add(sequenceCedilla)
 	case tokenizer.TokenApostrophe:
-		pattern.add("('|)")
+		pattern.add(sequenceApostrophe)
 	case tokenizer.TokenHyphen:
-		pattern.add("(-|)")
+		pattern.add(sequenceHyphen)
 	default:
 	}
 
