@@ -66,3 +66,26 @@ func TestNaiveTransformer_returns_a_symbol_for_each_token(t *testing.T) {
 		})
 	}
 }
+
+func TestNaiveTransformer_translates_several_tokens_to_a_sequence_of_naive_patterns(t *testing.T) {
+	testCases := map[string]struct {
+		tokens          []tokenizer.Token
+		expectedPattern string
+	}{
+		"vowel and consonant should translate to v and c": {
+			[]tokenizer.Token{tokenizer.TokenVowel, tokenizer.TokenConsonant},
+			"vc",
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			naiveTransformer := transformer.NewNaiveTransformer()
+			tokenChain := tokenizer.NewTokenChain(tc.tokens...)
+
+			pattern := naiveTransformer.Transform(*tokenChain)
+
+			assert.Equal(t, tc.expectedPattern, pattern.String())
+		})
+	}
+}

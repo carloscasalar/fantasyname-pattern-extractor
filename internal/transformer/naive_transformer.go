@@ -12,9 +12,10 @@ func NewNaiveTransformer() *NaiveTransformer {
 }
 
 func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
-	token := tokenChain.Tokens()[0]
 	pattern := new(Pattern)
-	pattern.add(t.toPattern(token))
+	for _, token := range tokenChain.Tokens() {
+		pattern.add(t.toPattern(token))
+	}
 
 	return *pattern
 }
