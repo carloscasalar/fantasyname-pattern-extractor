@@ -3,17 +3,17 @@ package transformer
 import "strings"
 
 type Pattern struct {
-	parts []string
+	sequences []string
 }
 
-func (p *Pattern) Add(patternPart string) {
-	p.parts = append(p.parts, patternPart)
+func (p *Pattern) Add(sequence string) {
+	p.sequences = append(p.sequences, sequence)
 }
 
 func (p *Pattern) String() string {
 	var patternBuilder strings.Builder
-	for _, part := range p.parts {
-		patternBuilder.WriteString(part)
+	for _, sequence := range p.sequences {
+		patternBuilder.WriteString(sequence)
 	}
 	return patternBuilder.String()
 }
