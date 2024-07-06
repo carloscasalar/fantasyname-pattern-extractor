@@ -13,30 +13,35 @@ func NewNaiveTransformer() *NaiveTransformer {
 
 func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 	token := tokenChain.Tokens()[0]
-	var pattern Pattern
+	pattern := new(Pattern)
+	pattern.add(t.toPattern(token))
+
+	return *pattern
+}
+
+func (t *NaiveTransformer) toPattern(token tokenizer.Token) patternSequence {
 	switch token {
 	case tokenizer.TokenVowel:
-		pattern.add(sequenceVowel)
+		return sequenceVowel
 	case tokenizer.TokenVowelAcuteAccented:
-		pattern.add(sequenceVowelAcuteAccented)
+		return sequenceVowelAcuteAccented
 	case tokenizer.TokenVowelGraveAccented:
-		pattern.add(sequenceVowelGraveAccented)
+		return sequenceVowelGraveAccented
 	case tokenizer.TokenVowelCircumflexAccented:
-		pattern.add(sequenceVowelCircumflexAccented)
+		return sequenceVowelCircumflexAccented
 	case tokenizer.TokenVowelDieresisAccented:
-		pattern.add(sequenceVowelDieresisAccented)
+		return sequenceVowelDieresisAccented
 	case tokenizer.TokenConsonant:
-		pattern.add(sequenceConsonant)
+		return sequenceConsonant
 	case tokenizer.TokenTildeN:
-		pattern.add(sequenceTildeN)
+		return sequenceTildeN
 	case tokenizer.TokenCedilla:
-		pattern.add(sequenceCedilla)
+		return sequenceCedilla
 	case tokenizer.TokenApostrophe:
-		pattern.add(sequenceApostrophe)
+		return sequenceApostrophe
 	case tokenizer.TokenHyphen:
-		pattern.add(sequenceHyphen)
+		return sequenceHyphen
 	default:
+		return emptySequence
 	}
-
-	return pattern
 }
