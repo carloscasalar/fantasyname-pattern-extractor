@@ -20,6 +20,13 @@ run: build
 test:
 	@go test -v ./...
 
+# Run the linter
+lint:
+	@revive -config .revive.toml -formatter friendly ./...
+
+# Run all checks
+check: lint test
+
 # Clean up build artifacts
 clean:
 	rm -f $(BINARY_NAME)
@@ -31,4 +38,4 @@ all: build
 %:
 	@true
 
-.PHONY: out build run test clean all
+.PHONY: out build run test lint check clean all

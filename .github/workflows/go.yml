@@ -24,5 +24,11 @@ jobs:
     - name: Build
       run: go build -v ./...
 
+    - name: Install revive
+      run: go install github.com/mgechev/revive@latest
+      
+    - name: Lint
+      run: make lint
+
     - name: Test
       run: go test -v ./...
