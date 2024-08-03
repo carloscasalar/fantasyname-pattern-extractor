@@ -1,6 +1,6 @@
 module github.com/carloscasalar/fantasyname-pattern-extractor
 
-go 1.17
+go 1.22
 
 require (
 	github.com/jessevdk/go-flags v1.6.1
