@@ -16,6 +16,10 @@ build: out
 run: build
 	$(BINARY_NAME) $(filter-out $@,$(MAKECMDGOALS))
 
+# Run tests
+test:
+	@go test -v ./...
+
 # Clean up build artifacts
 clean:
 	rm -f $(BINARY_NAME)
@@ -27,4 +31,4 @@ all: build
 %:
 	@true
 
-.PHONY: out build run clean all
+.PHONY: out build run test clean all

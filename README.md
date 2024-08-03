@@ -22,3 +22,11 @@ To run the extractor you can build it with the previous command and execute, or 
 ```bash 
 make run -- -s "Tanis" 
 ```
+
+## Tests
+
+You can run the tests with the following command:
+
+```bash
+make test
+```
