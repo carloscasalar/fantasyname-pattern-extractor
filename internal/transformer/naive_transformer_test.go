@@ -19,19 +19,19 @@ func TestNaiveTransformer_returns_a_symbol_for_each_token(t *testing.T) {
 		},
 		"vowel should acute accented to any acute accented vowel": {
 			tokenizer.TokenVowelAcuteAccented,
-			"(<v>|á|é|í|ó|ú)",
+			"(<v>|(á|é|í|ó|ú))",
 		},
 		"vowel should grave accented to any acute accented vowel": {
 			tokenizer.TokenVowelGraveAccented,
-			"(<v>|à|è|ì|ò|ù)",
+			"(<v>|(à|è|ì|ò|ù))",
 		},
 		"vowel should circumflex accented to any acute accented vowel": {
 			tokenizer.TokenVowelCircumflexAccented,
-			"(<v>|â|ê|î|ô|û)",
+			"(<v>|(â|ê|î|ô|û))",
 		},
 		"vowel should  dieresis accented to any acute accented vowel": {
 			tokenizer.TokenVowelDieresisAccented,
-			"(<v>|ä|ë|ï|ö|ü)",
+			"(<v>|(ä|ë|ï|ö|ü))",
 		},
 		"constant at the beginning should translate to c": {
 			tokenizer.TokenConsonant,
@@ -76,9 +76,9 @@ func TestNaiveTransformer_translates_several_tokens_to_a_sequence_of_naive_patte
 			[]tokenizer.Token{tokenizer.TokenVowel, tokenizer.TokenConsonant},
 			"vc",
 		},
-		"cedilla, vowel, aphostrophe and acute accented vowel should translate to (<c>|ç)v('|)|(<v>|á|é|í|ó|ú)": {
+		"cedilla, vowel, aphostrophe and acute accented vowel should translate to (<c>|ç)v('|)|(<v>|(á|é|í|ó|ú))": {
 			[]tokenizer.Token{tokenizer.TokenCedilla, tokenizer.TokenVowel, tokenizer.TokenApostrophe, tokenizer.TokenVowelAcuteAccented},
-			"(<c>|ç)v('|)(<v>|á|é|í|ó|ú)",
+			"(<c>|ç)v('|)(<v>|(á|é|í|ó|ú))",
 		},
 	}
 
