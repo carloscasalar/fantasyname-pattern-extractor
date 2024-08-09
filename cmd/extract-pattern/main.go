@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
-	"strings"
 
+	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/examples"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 
@@ -13,8 +12,6 @@ import (
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
 
 	"github.com/jessevdk/go-flags"
-
-	"github.com/s0rg/fantasyname"
 )
 
 func main() {
@@ -40,19 +37,15 @@ func main() {
 		fmt.Println(lipgloss.JoinHorizontal(lipgloss.Left, titleBox.Render("PATTERN:"), patternBox.Render(capitalizedPattern)))
 		return
 	}
-	examples := make([]string, opts.NumberOfOutputsToGenerate)
 
-	for i := 0; i < int(opts.NumberOfOutputsToGenerate); i++ {
-		gen, err := fantasyname.Compile(capitalizedPattern, fantasyname.Collapse(true), fantasyname.RandFn(rand.Intn))
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		examples[i] = gen.String()
+	nameExamples, err := examples.Generate(capitalizedPattern, opts.NumberOfOutputsToGenerate)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	rows := [][]string{
-		{capitalizedPattern, commaSeparated(examples)},
+		{capitalizedPattern, nameExamples},
 	}
 
 	re := lipgloss.NewRenderer(os.Stdout)
@@ -75,22 +68,6 @@ func main() {
 		Headers("PATTERN", "EXAMPLES").
 		Rows(rows...)
 	fmt.Println(t)
-}
-
-func commaSeparated(examples []string) string {
-	if len(examples) == 0 {
-		return ""
-	}
-
-	joinedString := new(strings.Builder)
-	for i, example := range examples {
-		joinedString.WriteString(example)
-		if i < len(examples)-1 {
-			joinedString.WriteString(", ")
-		}
-	}
-
-	return joinedString.String()
 }
 
 func readOptionsOrFail() Ops {
