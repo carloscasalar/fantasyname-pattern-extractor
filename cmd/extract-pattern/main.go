@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/examples"
+	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/commands"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 
@@ -38,7 +38,7 @@ func main() {
 		return
 	}
 
-	nameExamples, err := examples.Generate(capitalizedPattern, opts.NumberOfOutputsToGenerate)
+	nameExamples, err := commands.GenerateExamples(capitalizedPattern, opts.NumberOfOutputsToGenerate)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

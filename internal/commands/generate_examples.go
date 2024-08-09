@@ -1,4 +1,4 @@
-package examples
+package commands
 
 import (
 	"math/rand"
@@ -7,10 +7,9 @@ import (
 	"github.com/s0rg/fantasyname"
 )
 
-const emptyNames = ""
-
-// Generate as many examples as numberOfExamples from the given pattern as a comma-separated string
-func Generate(pattern string, numberOfExamples uint) (string, error) {
+// GenerateExamples as many commands as numberOfExamples from the given pattern as a comma-separated string
+func GenerateExamples(pattern string, numberOfExamples uint) (string, error) {
+	const emptyNames = ""
 	if pattern == "" || numberOfExamples == 0 {
 		return emptyNames, nil
 	}
