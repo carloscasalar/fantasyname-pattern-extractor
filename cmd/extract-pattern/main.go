@@ -16,7 +16,7 @@ import (
 func main() {
 	opts := readOptionsOrFail()
 
-	tokenizedSample, err := tokenizer.Tokenize(opts.Sample)
+	tokenizedSample, err := tokenizer.Tokenize(opts.Name)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -60,6 +60,6 @@ func readOptionsOrFail() Ops {
 }
 
 type Ops struct {
-	Sample                    string `short:"s" long:"sample" description:"Sample name to extract pattern from" required:"true"`
-	NumberOfOutputsToGenerate uint   `short:"n" long:"number-of-outputs" description:"Number of outputs to generate" default:"0"`
+	Name                      string `short:"n" long:"name" description:"Sample name to extract pattern from" required:"true"`
+	NumberOfOutputsToGenerate uint   `short:"o" long:"number-of-outputs" description:"Number of outputs to generate" default:"0"`
 }

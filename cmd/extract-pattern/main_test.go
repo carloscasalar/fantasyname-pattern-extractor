@@ -14,8 +14,8 @@ func TestMainFunctionSnapshot(t *testing.T) {
 		options        []string
 		expectedOutput string
 	}{
-		{[]string{"-s", "Tanis"}, "Pattern: !cvcvc\n"},
-		{[]string{"-s", "Iöwen"}, "Pattern: !v(<v>|(ä|ë|ï|ö|ü))cvc\n"},
+		{[]string{"-n", "Tanis"}, "Pattern: !cvcvc\n"},
+		{[]string{"-n", "Iöwen"}, "Pattern: !v(<v>|(ä|ë|ï|ö|ü))cvc\n"},
 	}
 
 	for _, inputAndExpectedOutput := range inputsAndExpectedOutputs {
