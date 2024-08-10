@@ -8,7 +8,6 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 
-	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/tokenizer"
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
 
 	"github.com/jessevdk/go-flags"
@@ -17,14 +16,13 @@ import (
 func main() {
 	opts := readOptionsOrFail()
 
-	tokenizedSample, err := tokenizer.Tokenize(opts.Name)
+	extractPattern := commands.NewExtractPattern(transformer.NewNaiveTransformer())
+	pattern, err := extractPattern.Execute(opts.Name)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	pattern := transformer.NewNaiveTransformer().Transform(*tokenizedSample)
-	capitalizedPattern := fmt.Sprintf("!%s", pattern.String())
+	capitalizedPattern := fmt.Sprintf("!%s", pattern)
 
 	if opts.NumberOfOutputsToGenerate == 0 {
 		titleBox := lipgloss.NewStyle().
