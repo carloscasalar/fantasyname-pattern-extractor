@@ -9,10 +9,12 @@ type Transformer interface {
 	Transform(tokenChain tokenizer.TokenChain) transformer.Pattern
 }
 
+// ExtractPattern is a command that extracts a pattern from a given name using the provided transformer
 type ExtractPattern struct {
 	transformer Transformer
 }
 
+// NewExtractPattern creates a new ExtractPattern command
 func NewExtractPattern(transformer Transformer) *ExtractPattern {
 	return &ExtractPattern{transformer: transformer}
 }
