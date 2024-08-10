@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"fmt"
+
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/tokenizer"
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
 )
@@ -26,5 +28,6 @@ func (pe *ExtractPattern) Execute(name string) (string, error) {
 	}
 
 	pattern := pe.transformer.Transform(*tokenizedSample)
-	return pattern.String(), nil
+	patternWithFirstLetterUppercased := fmt.Sprintf("!%s", pattern.String())
+	return patternWithFirstLetterUppercased, nil
 }

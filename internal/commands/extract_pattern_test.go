@@ -10,15 +10,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestExtractPattern_should_return_the_transformed_tokens(t *testing.T) {
+func TestExtractPattern_should_return_the_transformed_tokens_patter_uppercased(t *testing.T) {
+	const generatedPattern = "abc"
+	const firstLetterUppercasedPattern = "!abc"
 	tokenSpy := new(tokenSpy)
-	transformerMock := newMockTransformerReturningPattern("abc", tokenSpy)
+	transformerMock := newMockTransformerReturningPattern(generatedPattern, tokenSpy)
 	extractPattern := commands.NewExtractPattern(transformerMock)
 
 	resultingPattern, err := extractPattern.Execute("some name")
 
 	require.NoError(t, err)
-	assert.Equal(t, "abc", resultingPattern)
+	assert.Equal(t, firstLetterUppercasedPattern, resultingPattern)
 	assert.Equal(t, tokenFor("some name"), tokenSpy.tokensTransformed, "expected transformer had transformed teh tokens for the 'abc' string")
 
 }

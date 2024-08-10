@@ -22,7 +22,6 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	capitalizedPattern := fmt.Sprintf("!%s", pattern)
 
 	if opts.NumberOfOutputsToGenerate == 0 {
 		titleBox := lipgloss.NewStyle().
@@ -32,18 +31,18 @@ func main() {
 		patternBox := lipgloss.NewStyle().
 			MarginLeft(1).
 			Foreground(lipgloss.AdaptiveColor{Light: "#3C3C3C", Dark: "#04B575"})
-		fmt.Println(lipgloss.JoinHorizontal(lipgloss.Left, titleBox.Render("PATTERN:"), patternBox.Render(capitalizedPattern)))
+		fmt.Println(lipgloss.JoinHorizontal(lipgloss.Left, titleBox.Render("PATTERN:"), patternBox.Render(pattern)))
 		return
 	}
 
-	nameExamples, err := commands.GenerateExamples(capitalizedPattern, opts.NumberOfOutputsToGenerate)
+	nameExamples, err := commands.GenerateExamples(pattern, opts.NumberOfOutputsToGenerate)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	rows := [][]string{
-		{capitalizedPattern, nameExamples},
+		{pattern, nameExamples},
 	}
 
 	re := lipgloss.NewRenderer(os.Stdout)
