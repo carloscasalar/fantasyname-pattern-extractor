@@ -74,7 +74,8 @@ func getColumnExampleWidth(pattern string, nameExamples string) int {
 	if err != nil {
 		totalMaxWidth = 80
 	}
-	columnExampleMaxWidth := totalMaxWidth - len(pattern) - 10
+	const paddingsAndColumnsBorderLength = 10
+	columnExampleMaxWidth := totalMaxWidth - len(pattern) - paddingsAndColumnsBorderLength
 	columnExampleWidth := min(columnExampleMaxWidth, len(nameExamples))
 	return columnExampleWidth
 }
