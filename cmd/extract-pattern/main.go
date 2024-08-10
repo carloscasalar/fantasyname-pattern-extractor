@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
+	"golang.org/x/term"
+
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/commands"
+	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
-
-	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
-
 	"github.com/jessevdk/go-flags"
 )
 
@@ -49,7 +49,9 @@ func main() {
 	baseStyle := re.NewStyle().Padding(0, 1)
 	headerStyle := baseStyle.Foreground(lipgloss.AdaptiveColor{Light: "202", Dark: "252"}).Bold(true)
 	patternRow := baseStyle.Foreground(lipgloss.AdaptiveColor{Light: "#3C3C3C", Dark: "#04B575"})
-	columnExample := patternRow.MaxWidth(120).Italic(true)
+	columnExample := patternRow.
+		Width(getColumnExampleWidth(pattern, nameExamples)).
+		Italic(true)
 	t := table.New().
 		Border(lipgloss.NormalBorder()).
 		BorderStyle(lipgloss.NewStyle().Foreground(lipgloss.Color("99"))).
@@ -65,6 +67,16 @@ func main() {
 		Headers("PATTERN", "EXAMPLES").
 		Rows(rows...)
 	fmt.Println(t)
+}
+
+func getColumnExampleWidth(pattern string, nameExamples string) int {
+	totalMaxWidth, _, err := term.GetSize(int(os.Stdin.Fd()))
+	if err != nil {
+		totalMaxWidth = 80
+	}
+	columnExampleMaxWidth := totalMaxWidth - len(pattern) - 10
+	columnExampleWidth := min(columnExampleMaxWidth, len(nameExamples))
+	return columnExampleWidth
 }
 
 func readOptionsOrFail() Ops {
