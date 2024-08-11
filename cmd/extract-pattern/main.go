@@ -6,10 +6,10 @@ import (
 
 	"golang.org/x/term"
 
+	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/ui"
+
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/commands"
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/transformer"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/charmbracelet/lipgloss/table"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -23,61 +23,25 @@ func main() {
 		os.Exit(1)
 	}
 
-	if opts.NumberOfOutputsToGenerate == 0 {
-		titleBox := lipgloss.NewStyle().
-			Bold(true).
-			PaddingLeft(1).
-			Foreground(lipgloss.AdaptiveColor{Light: "202", Dark: "252"})
-		patternBox := lipgloss.NewStyle().
-			MarginLeft(1).
-			Foreground(lipgloss.AdaptiveColor{Light: "#3C3C3C", Dark: "#04B575"})
-		fmt.Println(lipgloss.JoinHorizontal(lipgloss.Left, titleBox.Render("PATTERN:"), patternBox.Render(pattern)))
-		return
+	var renderer Renderer
+	switch opts.NumberOfOutputsToGenerate {
+	case 0:
+		renderer = ui.NewTitleValueRenderer("PATTERN:", pattern)
+	default:
+		nameExamples, err := commands.GenerateExamples(pattern, opts.NumberOfOutputsToGenerate)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		renderer = ui.NewTwoColumnsTableRenderer(
+			"PATTERN",
+			"EXAMPLES",
+			[]ui.TwoColumnsTableRow{{pattern, nameExamples}},
+			getTerminalWidth())
 	}
 
-	nameExamples, err := commands.GenerateExamples(pattern, opts.NumberOfOutputsToGenerate)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	rows := [][]string{
-		{pattern, nameExamples},
-	}
-
-	re := lipgloss.NewRenderer(os.Stdout)
-	baseStyle := re.NewStyle().Padding(0, 1)
-	headerStyle := baseStyle.Foreground(lipgloss.AdaptiveColor{Light: "202", Dark: "252"}).Bold(true)
-	patternRow := baseStyle.Foreground(lipgloss.AdaptiveColor{Light: "#3C3C3C", Dark: "#04B575"})
-	columnExample := patternRow.
-		Width(getColumnExampleWidth(pattern, nameExamples)).
-		Italic(true)
-	t := table.New().
-		Border(lipgloss.NormalBorder()).
-		BorderStyle(lipgloss.NewStyle().Foreground(lipgloss.Color("99"))).
-		StyleFunc(func(row, col int) lipgloss.Style {
-			if row == 0 {
-				return headerStyle
-			}
-			if col == 0 {
-				return patternRow
-			}
-			return columnExample
-		}).
-		Headers("PATTERN", "EXAMPLES").
-		Rows(rows...)
-	fmt.Println(t)
-}
-
-func getColumnExampleWidth(pattern string, nameExamples string) int {
-	totalMaxWidth, _, err := term.GetSize(int(os.Stdin.Fd()))
-	if err != nil {
-		totalMaxWidth = 80
-	}
-	const paddingsAndColumnsBorderLength = 10
-	columnExampleMaxWidth := totalMaxWidth - len(pattern) - paddingsAndColumnsBorderLength
-	columnExampleWidth := min(columnExampleMaxWidth, len(nameExamples))
-	return columnExampleWidth
+	fmt.Println(renderer.Render())
 }
 
 func readOptionsOrFail() Ops {
@@ -97,7 +61,19 @@ func readOptionsOrFail() Ops {
 	return opts
 }
 
+func getTerminalWidth() int {
+	totalMaxWidth, _, err := term.GetSize(int(os.Stdin.Fd()))
+	if err != nil {
+		totalMaxWidth = 80
+	}
+	return totalMaxWidth
+}
+
 type Ops struct {
 	Name                      string `short:"n" long:"name" description:"Sample name to extract pattern from" required:"true"`
 	NumberOfOutputsToGenerate uint   `short:"o" long:"number-of-outputs" description:"Number of outputs to generate" default:"0"`
+}
+
+type Renderer interface {
+	Render() string
 }
