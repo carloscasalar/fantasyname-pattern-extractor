@@ -45,7 +45,7 @@ func (r *TwoColumnsTableRenderer) Render() string {
 }
 
 func (r *TwoColumnsTableRenderer) getSecondColumnWith() int {
-	const paddingsAndColumnsBorderLength = 10
+	const paddingsAndColumnsBorderLength = 5
 	maxFirstColumnLength, maxSecondColumnLength := r.getMaxColumnLengths()
 	secondColumnMaxWidth := r.maxWidth - maxFirstColumnLength - paddingsAndColumnsBorderLength
 	secondColumnWidth := min(secondColumnMaxWidth, maxSecondColumnLength)
