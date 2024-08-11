@@ -33,12 +33,11 @@ func main() {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-
-		renderer = ui.NewTwoColumnsTableRenderer(
-			"PATTERN",
-			"EXAMPLES",
-			[]ui.TwoColumnsTableRow{{pattern, nameExamples}},
-			getTerminalWidth())
+		renderer = new(ui.TwoColumnsTableBuilder).
+			WithMaxWidth(getTerminalWidth()).
+			WithTitles("PATTERN", "EXAMPLES").
+			WithRow(pattern, nameExamples).
+			Build()
 	}
 
 	fmt.Println(renderer.Render())

@@ -12,17 +12,7 @@ type TwoColumnsTableRenderer struct {
 	maxWidth          int
 	firstColumnTitle  string
 	secondColumnTitle string
-	rows              []TwoColumnsTableRow
-}
-
-func NewTwoColumnsTableRenderer(firstColumnTitle, secondColumnTitle string, rows []TwoColumnsTableRow, maxWidth int) *TwoColumnsTableRenderer {
-	return &TwoColumnsTableRenderer{
-		styles:            newLipGlossDefaultStyle(),
-		maxWidth:          maxWidth,
-		firstColumnTitle:  firstColumnTitle,
-		secondColumnTitle: secondColumnTitle,
-		rows:              rows,
-	}
+	rows              []twoColumnsTableRow
 }
 
 func (r *TwoColumnsTableRenderer) Render() string {
@@ -63,8 +53,8 @@ func (r *TwoColumnsTableRenderer) getSecondColumnWith() int {
 }
 
 func (r *TwoColumnsTableRenderer) getMaxColumnLengths() (int, int) {
-	maxFirstColumnLength := 0
-	maxSecondColumnLength := 0
+	maxFirstColumnLength := len(r.firstColumnTitle)
+	maxSecondColumnLength := len(r.secondColumnTitle)
 
 	for _, row := range r.rows {
 		maxFirstColumnLength = max(maxFirstColumnLength, len(row.firstColumnValue()))
@@ -72,4 +62,45 @@ func (r *TwoColumnsTableRenderer) getMaxColumnLengths() (int, int) {
 	}
 
 	return maxFirstColumnLength, maxSecondColumnLength
+}
+
+type TwoColumnsTableBuilder struct {
+	styles            *lipGlossStyle
+	maxWidth          *int
+	firstColumnTitle  *string
+	secondColumnTitle *string
+	rows              []twoColumnsTableRow
+}
+
+func (b *TwoColumnsTableBuilder) WithMaxWidth(maxWidth int) *TwoColumnsTableBuilder {
+	b.maxWidth = &maxWidth
+	return b
+}
+
+func (b *TwoColumnsTableBuilder) WithTitles(firstColumnTitle, secondColumnTitle string) *TwoColumnsTableBuilder {
+	b.firstColumnTitle = &firstColumnTitle
+	b.secondColumnTitle = &secondColumnTitle
+	return b
+}
+
+func (b *TwoColumnsTableBuilder) WithRow(firstColumnValue, secondColumnValue string) *TwoColumnsTableBuilder {
+	b.rows = append(b.rows, twoColumnsTableRow{firstColumnValue, secondColumnValue})
+	return b
+}
+
+func (b *TwoColumnsTableBuilder) Build() *TwoColumnsTableRenderer {
+	return &TwoColumnsTableRenderer{
+		styles:            newLipGlossDefaultStyle(),
+		maxWidth:          nvl(b.maxWidth, 80),
+		firstColumnTitle:  nvl(b.firstColumnTitle, "First Column"),
+		secondColumnTitle: nvl(b.secondColumnTitle, "Second Column"),
+		rows:              b.rows,
+	}
+}
+
+func nvl[T any](value *T, defaultValue T) T {
+	if value == nil {
+		return defaultValue
+	}
+	return *value
 }
