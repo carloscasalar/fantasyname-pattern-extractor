@@ -20,6 +20,7 @@ var (
 
 type Token interface {
 	String() string
+	IsVowel() bool
 }
 
 type token struct {
