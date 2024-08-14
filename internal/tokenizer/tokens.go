@@ -1,7 +1,8 @@
 package tokenizer
 
 type Token struct {
-	root tokenRoot
+	root   tokenRoot
+	accent accent
 }
 
 type tokenOption func(*Token)
@@ -20,33 +21,33 @@ func withRoot(r tokenRoot) tokenOption {
 	}
 }
 
+func withAccent(a accent) tokenOption {
+	return func(t *Token) {
+		t.accent = a
+	}
+}
+
 type tokenRoot int
 
 const (
-	rootConsonant tokenRoot = iota
+	rootUndefined tokenRoot = iota
+	rootConsonant
 	rootTildeN
 	rootCedilla
 	rootVowel
-	rootVowelAcuteAccented
-	rootVowelGraveAccented
-	rootVowelCircumflexAccented
-	rootVowelDieresisAccented
 	rootApostrophe
 	rootHyphen
 )
 
 func (t tokenRoot) String() string {
 	tokenStrings := map[tokenRoot]string{
-		rootConsonant:               "Consonant",
-		rootTildeN:                  "TildeN",
-		rootCedilla:                 "Cedilla",
-		rootVowel:                   "Vowel",
-		rootVowelAcuteAccented:      "VowelAcuteAccented",
-		rootVowelGraveAccented:      "VowelGraveAccented",
-		rootVowelCircumflexAccented: "VowelCircumflexAccented",
-		rootVowelDieresisAccented:   "VowelDieresisAccented",
-		rootApostrophe:              "Apostrophe",
-		rootHyphen:                  "Hyphen",
+		rootUndefined:  "Undefined",
+		rootConsonant:  "Consonant",
+		rootTildeN:     "TildeN",
+		rootCedilla:    "Cedilla",
+		rootVowel:      "Vowel",
+		rootApostrophe: "Apostrophe",
+		rootHyphen:     "Hyphen",
 	}
 
 	if str, found := tokenStrings[t]; found {
@@ -60,30 +61,52 @@ var (
 	TokenTildeN                  = newToken(withRoot(rootTildeN))
 	TokenCedilla                 = newToken(withRoot(rootCedilla))
 	TokenVowel                   = newToken(withRoot(rootVowel))
-	TokenVowelAcuteAccented      = newToken(withRoot(rootVowelAcuteAccented))
-	TokenVowelGraveAccented      = newToken(withRoot(rootVowelGraveAccented))
-	TokenVowelCircumflexAccented = newToken(withRoot(rootVowelCircumflexAccented))
-	TokenVowelDieresisAccented   = newToken(withRoot(rootVowelDieresisAccented))
+	TokenVowelAcuteAccented      = newToken(withRoot(rootVowel), withAccent(accentAcute))
+	TokenVowelGraveAccented      = newToken(withRoot(rootVowel), withAccent(accentGrave))
+	TokenVowelCircumflexAccented = newToken(withRoot(rootVowel), withAccent(accentCircumflex))
+	TokenVowelDieresisAccented   = newToken(withRoot(rootVowel), withAccent(accentDieresis))
 	TokenApostrophe              = newToken(withRoot(rootApostrophe))
 	TokenHyphen                  = newToken(withRoot(rootHyphen))
 )
 
 func (t Token) String() string {
 	tokenStrings := map[tokenRoot]string{
-		rootConsonant:               "Consonant",
-		rootTildeN:                  "TildeN",
-		rootCedilla:                 "Cedilla",
-		rootVowel:                   "Vowel",
-		rootVowelAcuteAccented:      "VowelAcuteAccented",
-		rootVowelGraveAccented:      "VowelGraveAccented",
-		rootVowelCircumflexAccented: "VowelCircumflexAccented",
-		rootVowelDieresisAccented:   "VowelDieresisAccented",
-		rootApostrophe:              "Apostrophe",
-		rootHyphen:                  "Hyphen",
+		rootConsonant:  "Consonant",
+		rootTildeN:     "TildeN",
+		rootCedilla:    "Cedilla",
+		rootVowel:      "Vowel",
+		rootApostrophe: "Apostrophe",
+		rootHyphen:     "Hyphen",
 	}
 
-	if str, found := tokenStrings[t.root]; found {
+	rootString, found := tokenStrings[t.root]
+	if !found {
+		return "UndefinedToken"
+	}
+	return rootString + t.accent.String()
+}
+
+type accent int
+
+const (
+	accentNone accent = iota
+	accentAcute
+	accentGrave
+	accentCircumflex
+	accentDieresis
+)
+
+func (a accent) String() string {
+	accentStrings := map[accent]string{
+		accentNone:       "",
+		accentAcute:      "AcuteAccented",
+		accentGrave:      "GraveAccented",
+		accentCircumflex: "CircumflexAccented",
+		accentDieresis:   "DieresisAccented",
+	}
+
+	if str, found := accentStrings[a]; found {
 		return str
 	}
-	return "UndefinedToken"
+	return "UndefinedAccent"
 }
