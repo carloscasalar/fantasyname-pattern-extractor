@@ -13,27 +13,47 @@ func TestNaiveTransformer_returns_a_symbol_for_each_token(t *testing.T) {
 		tokenChain      tokenizer.Token
 		expectedPattern string
 	}{
-		"vowel should translate to v": {
-			tokenizer.TokenVowel,
+		"strong vowel should translate to v": {
+			tokenizer.TokenVowelStrong,
 			"v",
 		},
-		"vowel should acute accented to any acute accented vowel": {
-			tokenizer.TokenVowelAcuteAccented,
+		"weak vowel should translate to v": {
+			tokenizer.TokenVowelWeak,
+			"v",
+		},
+		"strong vowel acute accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelStrongAcuteAccented,
 			"(<v>|(á|é|í|ó|ú))",
 		},
-		"vowel should grave accented to any acute accented vowel": {
-			tokenizer.TokenVowelGraveAccented,
+		"weak vowel acute accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelWeakAcuteAccented,
+			"(<v>|(á|é|í|ó|ú))",
+		},
+		"strong vowel grave accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelStrongGraveAccented,
 			"(<v>|(à|è|ì|ò|ù))",
 		},
-		"vowel should circumflex accented to any acute accented vowel": {
-			tokenizer.TokenVowelCircumflexAccented,
+		"weak vowel grave accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelWeakGraveAccented,
+			"(<v>|(à|è|ì|ò|ù))",
+		},
+		"strong vowel circumflex accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelStrongCircumflexAccented,
 			"(<v>|(â|ê|î|ô|û))",
 		},
-		"vowel should  dieresis accented to any acute accented vowel": {
-			tokenizer.TokenVowelDieresisAccented,
+		"weak vowel circumflex accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelWeakCircumflexAccented,
+			"(<v>|(â|ê|î|ô|û))",
+		},
+		"strong vowel dieresis accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelStrongDieresisAccented,
 			"(<v>|(ä|ë|ï|ö|ü))",
 		},
-		"constant at the beginning should translate to c": {
+		"weak vowel dieresis accented should translate to any acute accented vowel": {
+			tokenizer.TokenVowelWeakDieresisAccented,
+			"(<v>|(ä|ë|ï|ö|ü))",
+		},
+		"consonant at the beginning should translate to c": {
 			tokenizer.TokenConsonant,
 			"c",
 		},
@@ -72,12 +92,16 @@ func TestNaiveTransformer_translates_several_tokens_to_a_sequence_of_naive_patte
 		tokens          []tokenizer.Token
 		expectedPattern string
 	}{
-		"vowel and consonant should translate to v and c": {
-			[]tokenizer.Token{tokenizer.TokenVowel, tokenizer.TokenConsonant},
+		"strong vowel and consonant should translate to v and c": {
+			[]tokenizer.Token{tokenizer.TokenVowelStrong, tokenizer.TokenConsonant},
+			"vc",
+		},
+		"weak vowel and consonant should translate to v and c": {
+			[]tokenizer.Token{tokenizer.TokenVowelWeak, tokenizer.TokenConsonant},
 			"vc",
 		},
 		"cedilla, vowel, aphostrophe and acute accented vowel should translate to (<c>|ç)v('|)|(<v>|(á|é|í|ó|ú))": {
-			[]tokenizer.Token{tokenizer.TokenCedilla, tokenizer.TokenVowel, tokenizer.TokenApostrophe, tokenizer.TokenVowelAcuteAccented},
+			[]tokenizer.Token{tokenizer.TokenCedilla, tokenizer.TokenVowelStrong, tokenizer.TokenApostrophe, tokenizer.TokenVowelWeakAcuteAccented},
 			"(<c>|ç)v('|)(<v>|(á|é|í|ó|ú))",
 		},
 	}
