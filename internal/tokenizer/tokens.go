@@ -69,20 +69,20 @@ var (
 )
 
 func (t Token) String() string {
-	tokenStrings := map[Token]string{
-		TokenConsonant:               "Consonant",
-		TokenTildeN:                  "TildeN",
-		TokenCedilla:                 "Cedilla",
-		TokenVowel:                   "Vowel",
-		TokenVowelAcuteAccented:      "VowelAcuteAccented",
-		TokenVowelGraveAccented:      "VowelGraveAccented",
-		TokenVowelCircumflexAccented: "VowelCircumflexAccented",
-		TokenVowelDieresisAccented:   "VowelDieresisAccented",
-		TokenApostrophe:              "Apostrophe",
-		TokenHyphen:                  "Hyphen",
+	tokenStrings := map[tokenRoot]string{
+		rootConsonant:               "Consonant",
+		rootTildeN:                  "TildeN",
+		rootCedilla:                 "Cedilla",
+		rootVowel:                   "Vowel",
+		rootVowelAcuteAccented:      "VowelAcuteAccented",
+		rootVowelGraveAccented:      "VowelGraveAccented",
+		rootVowelCircumflexAccented: "VowelCircumflexAccented",
+		rootVowelDieresisAccented:   "VowelDieresisAccented",
+		rootApostrophe:              "Apostrophe",
+		rootHyphen:                  "Hyphen",
 	}
 
-	if str, found := tokenStrings[t]; found {
+	if str, found := tokenStrings[t.root]; found {
 		return str
 	}
 	return "UndefinedToken"
