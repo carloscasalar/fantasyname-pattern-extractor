@@ -1,24 +1,59 @@
 package tokenizer
 
-type Token int
+type Token struct {
+	root tokenRoot
+}
+
+type tokenRoot int
 
 const (
-	NoToken Token = iota
-	TokenConsonant
-	TokenTildeN
-	TokenCedilla
-	TokenVowel
-	TokenVowelAcuteAccented
-	TokenVowelGraveAccented
-	TokenVowelCircumflexAccented
-	TokenVowelDieresisAccented
-	TokenApostrophe
-	TokenHyphen
+	rootConsonant tokenRoot = iota
+	rootTildeN
+	rootCedilla
+	rootVowel
+	rootVowelAcuteAccented
+	rootVowelGraveAccented
+	rootVowelCircumflexAccented
+	rootVowelDieresisAccented
+	rootApostrophe
+	rootHyphen
+)
+
+func (t tokenRoot) String() string {
+	tokenStrings := map[tokenRoot]string{
+		rootConsonant:               "Consonant",
+		rootTildeN:                  "TildeN",
+		rootCedilla:                 "Cedilla",
+		rootVowel:                   "Vowel",
+		rootVowelAcuteAccented:      "VowelAcuteAccented",
+		rootVowelGraveAccented:      "VowelGraveAccented",
+		rootVowelCircumflexAccented: "VowelCircumflexAccented",
+		rootVowelDieresisAccented:   "VowelDieresisAccented",
+		rootApostrophe:              "Apostrophe",
+		rootHyphen:                  "Hyphen",
+	}
+
+	if str, found := tokenStrings[t]; found {
+		return str
+	}
+	return "UndefinedToken"
+}
+
+var (
+	TokenConsonant               = Token{root: rootConsonant}
+	TokenTildeN                  = Token{root: rootTildeN}
+	TokenCedilla                 = Token{root: rootCedilla}
+	TokenVowel                   = Token{root: rootVowel}
+	TokenVowelAcuteAccented      = Token{root: rootVowelAcuteAccented}
+	TokenVowelGraveAccented      = Token{root: rootVowelGraveAccented}
+	TokenVowelCircumflexAccented = Token{root: rootVowelCircumflexAccented}
+	TokenVowelDieresisAccented   = Token{root: rootVowelDieresisAccented}
+	TokenApostrophe              = Token{root: rootApostrophe}
+	TokenHyphen                  = Token{root: rootHyphen}
 )
 
 func (t Token) String() string {
 	tokenStrings := map[Token]string{
-		NoToken:                      "NoToken",
 		TokenConsonant:               "Consonant",
 		TokenTildeN:                  "TildeN",
 		TokenCedilla:                 "Cedilla",
