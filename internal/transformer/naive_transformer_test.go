@@ -100,7 +100,7 @@ func TestNaiveTransformer_translates_several_tokens_to_a_sequence_of_naive_patte
 			[]tokenizer.Token{tokenizer.TokenVowelWeak, tokenizer.TokenConsonant},
 			"vc",
 		},
-		"cedilla, vowel, aphostrophe and acute accented vowel should translate to (<c>|ç)v('|)|(<v>|(á|é|í|ó|ú))": {
+		"cedilla, vowel, apostrophe and acute accented vowel should translate to (<c>|ç)v('|)|(<v>|(á|é|í|ó|ú))": {
 			[]tokenizer.Token{tokenizer.TokenCedilla, tokenizer.TokenVowelStrong, tokenizer.TokenApostrophe, tokenizer.TokenVowelWeakAcuteAccented},
 			"(<c>|ç)v('|)(<v>|(á|é|í|ó|ú))",
 		},
