@@ -18,6 +18,46 @@ type Token struct {
 	accent accent
 }
 
+func (t Token) IsVowel() bool {
+	return t.root == rootVowel
+}
+
+func (t Token) IsAcuteAccented() bool {
+	return t.accent == accentAcute
+}
+
+func (t Token) IsGraveAccented() bool {
+	return t.accent == accentGrave
+}
+
+func (t Token) IsCircumflexAccented() bool {
+	return t.accent == accentCircumflex
+}
+
+func (t Token) IsDieresisAccented() bool {
+	return t.accent == accentDieresis
+}
+
+func (t Token) IsConsonant() bool {
+	return t.root == rootConsonant || t.root == rootTildeN || t.root == rootCedilla
+}
+
+func (t Token) IsTildeN() bool {
+	return t.root == rootTildeN
+}
+
+func (t Token) IsCedilla() bool {
+	return t.root == rootCedilla
+}
+
+func (t Token) IsApostrophe() bool {
+	return t.root == rootApostrophe
+}
+
+func (t Token) IsHyphen() bool {
+	return t.root == rootHyphen
+}
+
 func (t Token) String() string {
 	return t.root.String() + t.accent.String()
 }

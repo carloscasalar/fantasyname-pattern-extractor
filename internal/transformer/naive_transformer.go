@@ -21,28 +21,40 @@ func (t *NaiveTransformer) Transform(tokenChain tokenizer.TokenChain) Pattern {
 }
 
 func (t *NaiveTransformer) toPattern(token tokenizer.Token) patternSequence {
-	switch token {
-	case tokenizer.TokenVowel:
+	if token.IsVowel() {
+		if token.IsAcuteAccented() {
+			return sequenceVowelAcuteAccented
+		}
+		if token.IsGraveAccented() {
+			return sequenceVowelGraveAccented
+		}
+		if token.IsCircumflexAccented() {
+			return sequenceVowelCircumflexAccented
+		}
+		if token.IsDieresisAccented() {
+			return sequenceVowelDieresisAccented
+		}
 		return sequenceVowel
-	case tokenizer.TokenVowelAcuteAccented:
-		return sequenceVowelAcuteAccented
-	case tokenizer.TokenVowelGraveAccented:
-		return sequenceVowelGraveAccented
-	case tokenizer.TokenVowelCircumflexAccented:
-		return sequenceVowelCircumflexAccented
-	case tokenizer.TokenVowelDieresisAccented:
-		return sequenceVowelDieresisAccented
-	case tokenizer.TokenConsonant:
-		return sequenceConsonant
-	case tokenizer.TokenTildeN:
-		return sequenceTildeN
-	case tokenizer.TokenCedilla:
-		return sequenceCedilla
-	case tokenizer.TokenApostrophe:
-		return sequenceApostrophe
-	case tokenizer.TokenHyphen:
-		return sequenceHyphen
-	default:
-		return emptySequence
 	}
+
+	if token.IsConsonant() {
+		if token.IsCedilla() {
+			return sequenceCedilla
+		}
+
+		if token.IsTildeN() {
+			return sequenceTildeN
+		}
+		return sequenceConsonant
+	}
+
+	if token.IsApostrophe() {
+		return sequenceApostrophe
+	}
+
+	if token.IsHyphen() {
+		return sequenceHyphen
+	}
+
+	return emptySequence
 }
