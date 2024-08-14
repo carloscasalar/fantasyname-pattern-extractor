@@ -1,8 +1,25 @@
 package tokenizer
 
+var (
+	TokenConsonant               = newToken(withRoot(rootConsonant))
+	TokenTildeN                  = newToken(withRoot(rootTildeN))
+	TokenCedilla                 = newToken(withRoot(rootCedilla))
+	TokenVowel                   = newToken(withRoot(rootVowel))
+	TokenVowelAcuteAccented      = newToken(withRoot(rootVowel), withAccent(accentAcute))
+	TokenVowelGraveAccented      = newToken(withRoot(rootVowel), withAccent(accentGrave))
+	TokenVowelCircumflexAccented = newToken(withRoot(rootVowel), withAccent(accentCircumflex))
+	TokenVowelDieresisAccented   = newToken(withRoot(rootVowel), withAccent(accentDieresis))
+	TokenApostrophe              = newToken(withRoot(rootApostrophe))
+	TokenHyphen                  = newToken(withRoot(rootHyphen))
+)
+
 type Token struct {
 	root   tokenRoot
 	accent accent
+}
+
+func (t Token) String() string {
+	return t.root.String() + t.accent.String()
 }
 
 type tokenOption func(*Token)
@@ -54,36 +71,6 @@ func (t tokenRoot) String() string {
 		return str
 	}
 	return "UndefinedToken"
-}
-
-var (
-	TokenConsonant               = newToken(withRoot(rootConsonant))
-	TokenTildeN                  = newToken(withRoot(rootTildeN))
-	TokenCedilla                 = newToken(withRoot(rootCedilla))
-	TokenVowel                   = newToken(withRoot(rootVowel))
-	TokenVowelAcuteAccented      = newToken(withRoot(rootVowel), withAccent(accentAcute))
-	TokenVowelGraveAccented      = newToken(withRoot(rootVowel), withAccent(accentGrave))
-	TokenVowelCircumflexAccented = newToken(withRoot(rootVowel), withAccent(accentCircumflex))
-	TokenVowelDieresisAccented   = newToken(withRoot(rootVowel), withAccent(accentDieresis))
-	TokenApostrophe              = newToken(withRoot(rootApostrophe))
-	TokenHyphen                  = newToken(withRoot(rootHyphen))
-)
-
-func (t Token) String() string {
-	tokenStrings := map[tokenRoot]string{
-		rootConsonant:  "Consonant",
-		rootTildeN:     "TildeN",
-		rootCedilla:    "Cedilla",
-		rootVowel:      "Vowel",
-		rootApostrophe: "Apostrophe",
-		rootHyphen:     "Hyphen",
-	}
-
-	rootString, found := tokenStrings[t.root]
-	if !found {
-		return "UndefinedToken"
-	}
-	return rootString + t.accent.String()
 }
 
 type accent int
