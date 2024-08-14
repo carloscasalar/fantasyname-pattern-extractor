@@ -4,6 +4,22 @@ type Token struct {
 	root tokenRoot
 }
 
+type tokenOption func(*Token)
+
+func newToken(opts ...tokenOption) Token {
+	t := Token{}
+	for _, opt := range opts {
+		opt(&t)
+	}
+	return t
+}
+
+func withRoot(r tokenRoot) tokenOption {
+	return func(t *Token) {
+		t.root = r
+	}
+}
+
 type tokenRoot int
 
 const (
@@ -40,16 +56,16 @@ func (t tokenRoot) String() string {
 }
 
 var (
-	TokenConsonant               = Token{root: rootConsonant}
-	TokenTildeN                  = Token{root: rootTildeN}
-	TokenCedilla                 = Token{root: rootCedilla}
-	TokenVowel                   = Token{root: rootVowel}
-	TokenVowelAcuteAccented      = Token{root: rootVowelAcuteAccented}
-	TokenVowelGraveAccented      = Token{root: rootVowelGraveAccented}
-	TokenVowelCircumflexAccented = Token{root: rootVowelCircumflexAccented}
-	TokenVowelDieresisAccented   = Token{root: rootVowelDieresisAccented}
-	TokenApostrophe              = Token{root: rootApostrophe}
-	TokenHyphen                  = Token{root: rootHyphen}
+	TokenConsonant               = newToken(withRoot(rootConsonant))
+	TokenTildeN                  = newToken(withRoot(rootTildeN))
+	TokenCedilla                 = newToken(withRoot(rootCedilla))
+	TokenVowel                   = newToken(withRoot(rootVowel))
+	TokenVowelAcuteAccented      = newToken(withRoot(rootVowelAcuteAccented))
+	TokenVowelGraveAccented      = newToken(withRoot(rootVowelGraveAccented))
+	TokenVowelCircumflexAccented = newToken(withRoot(rootVowelCircumflexAccented))
+	TokenVowelDieresisAccented   = newToken(withRoot(rootVowelDieresisAccented))
+	TokenApostrophe              = newToken(withRoot(rootApostrophe))
+	TokenHyphen                  = newToken(withRoot(rootHyphen))
 )
 
 func (t Token) String() string {
