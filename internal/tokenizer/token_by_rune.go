@@ -1,0 +1,61 @@
+package tokenizer
+
+var tokenByRune = map[rune]Token{
+	'b': TokenConsonant,
+	'c': TokenConsonant,
+	'd': TokenConsonant,
+	'f': TokenConsonant,
+	'g': TokenConsonant,
+	'h': TokenConsonant,
+	'j': TokenConsonant,
+	'k': TokenConsonant,
+	'l': TokenConsonant,
+	'm': TokenConsonant,
+	'n': TokenConsonant,
+	'p': TokenConsonant,
+	'q': TokenConsonant,
+	'r': TokenConsonant,
+	's': TokenConsonant,
+	't': TokenConsonant,
+	'v': TokenConsonant,
+	'w': TokenConsonant,
+	'x': TokenConsonant,
+	'y': TokenConsonant,
+	'z': TokenConsonant,
+
+	'a': TokenVowel,
+	'e': TokenVowel,
+	'i': TokenVowel,
+	'o': TokenVowel,
+	'u': TokenVowel,
+
+	'á': TokenVowelAcuteAccented,
+	'é': TokenVowelAcuteAccented,
+	'í': TokenVowelAcuteAccented,
+	'ó': TokenVowelAcuteAccented,
+	'ú': TokenVowelAcuteAccented,
+
+	'à': TokenVowelGraveAccented,
+	'è': TokenVowelGraveAccented,
+	'ì': TokenVowelGraveAccented,
+	'ò': TokenVowelGraveAccented,
+	'ù': TokenVowelGraveAccented,
+
+	'â': TokenVowelCircumflexAccented,
+	'ê': TokenVowelCircumflexAccented,
+	'î': TokenVowelCircumflexAccented,
+	'ô': TokenVowelCircumflexAccented,
+	'û': TokenVowelCircumflexAccented,
+
+	'ä': TokenVowelDieresisAccented,
+	'ë': TokenVowelDieresisAccented,
+	'ï': TokenVowelDieresisAccented,
+	'ö': TokenVowelDieresisAccented,
+	'ü': TokenVowelDieresisAccented,
+
+	'ç': TokenCedilla,
+	'ñ': TokenTildeN,
+
+	'\'': TokenApostrophe,
+	'-':  TokenHyphen,
+}
