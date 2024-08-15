@@ -20,7 +20,7 @@ var (
 
 type Token interface {
 	String() string
-	IsVowel() bool
+	IsVowel() (bool, *TokenVowel)
 }
 
 type token struct {
@@ -31,8 +31,11 @@ func (t token) String() string {
 	return t.root.String()
 }
 
-func (t token) IsVowel() bool {
-	return t.root == rootVowel
+func (t token) IsVowel() (bool, *TokenVowel) {
+	if t.root == rootVowel {
+		return true, &TokenVowel{token: t}
+	}
+	return false, nil
 }
 
 type TokenVowel struct {
@@ -44,6 +47,9 @@ type TokenVowel struct {
 
 func (t TokenVowel) String() string {
 	return t.root.String() + t.strength.String() + t.accent.String()
+}
+func (t TokenVowel) IsVowel() (bool, *TokenVowel) {
+	return true, &t
 }
 
 func (t TokenVowel) IsStrong() bool {
