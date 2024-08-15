@@ -4,16 +4,16 @@ var (
 	TokenConsonant                     Token = newToken(withRoot(rootConsonant))
 	TokenTildeN                        Token = newToken(withRoot(rootTildeN))
 	TokenCedilla                       Token = newToken(withRoot(rootCedilla))
-	TokenVowelStrong                   Token = newVowelToken(withStrength(strengthStrong))
-	TokenVowelWeak                     Token = newVowelToken(withStrength(strengthWeak))
-	TokenVowelStrongAcuteAccented      Token = newVowelToken(withAccent(accentAcute), withStrength(strengthStrong))
-	TokenVowelWeakAcuteAccented        Token = newVowelToken(withAccent(accentAcute), withStrength(strengthWeak))
-	TokenVowelStrongGraveAccented      Token = newVowelToken(withAccent(accentGrave), withStrength(strengthStrong))
-	TokenVowelWeakGraveAccented        Token = newVowelToken(withAccent(accentGrave), withStrength(strengthWeak))
-	TokenVowelStrongCircumflexAccented Token = newVowelToken(withAccent(accentCircumflex), withStrength(strengthStrong))
-	TokenVowelWeakCircumflexAccented   Token = newVowelToken(withAccent(accentCircumflex), withStrength(strengthWeak))
-	TokenVowelStrongDieresisAccented   Token = newVowelToken(withAccent(accentDieresis), withStrength(strengthStrong))
-	TokenVowelWeakDieresisAccented     Token = newVowelToken(withAccent(accentDieresis), withStrength(strengthWeak))
+	TokenVowelStrong                         = newVowelToken(withStrength(strengthStrong))
+	TokenVowelWeak                           = newVowelToken(withStrength(strengthWeak))
+	TokenVowelStrongAcuteAccented            = newVowelToken(withAccent(accentAcute), withStrength(strengthStrong))
+	TokenVowelWeakAcuteAccented              = newVowelToken(withAccent(accentAcute), withStrength(strengthWeak))
+	TokenVowelStrongGraveAccented            = newVowelToken(withAccent(accentGrave), withStrength(strengthStrong))
+	TokenVowelWeakGraveAccented              = newVowelToken(withAccent(accentGrave), withStrength(strengthWeak))
+	TokenVowelStrongCircumflexAccented       = newVowelToken(withAccent(accentCircumflex), withStrength(strengthStrong))
+	TokenVowelWeakCircumflexAccented         = newVowelToken(withAccent(accentCircumflex), withStrength(strengthWeak))
+	TokenVowelStrongDieresisAccented         = newVowelToken(withAccent(accentDieresis), withStrength(strengthStrong))
+	TokenVowelWeakDieresisAccented           = newVowelToken(withAccent(accentDieresis), withStrength(strengthWeak))
 	TokenApostrophe                    Token = newToken(withRoot(rootApostrophe))
 	TokenHyphen                        Token = newToken(withRoot(rootHyphen))
 )
@@ -48,6 +48,7 @@ type TokenVowel struct {
 func (t TokenVowel) String() string {
 	return t.root.String() + t.strength.String() + t.accent.String()
 }
+
 func (t TokenVowel) IsVowel() (bool, *TokenVowel) {
 	return true, &t
 }
