@@ -29,27 +29,27 @@ func TestNaiveTransformer_returns_a_symbol_for_each_token(t *testing.T) {
 			tokenizer.TokenVowelWeakAcuteAccented,
 			"(<v>|(á|é|í|ó|ú))",
 		},
-		"strong vowel grave accented should translate to any acute accented vowel": {
+		"strong vowel grave accented should translate to any grave accented vowel": {
 			tokenizer.TokenVowelStrongGraveAccented,
 			"(<v>|(à|è|ì|ò|ù))",
 		},
-		"weak vowel grave accented should translate to any acute accented vowel": {
+		"weak vowel grave accented should translate to any grave accented vowel": {
 			tokenizer.TokenVowelWeakGraveAccented,
 			"(<v>|(à|è|ì|ò|ù))",
 		},
-		"strong vowel circumflex accented should translate to any acute accented vowel": {
+		"strong vowel circumflex accented should translate to any circumflex accented vowel": {
 			tokenizer.TokenVowelStrongCircumflexAccented,
 			"(<v>|(â|ê|î|ô|û))",
 		},
-		"weak vowel circumflex accented should translate to any acute accented vowel": {
+		"weak vowel circumflex accented should translate to any circumflex accented vowel": {
 			tokenizer.TokenVowelWeakCircumflexAccented,
 			"(<v>|(â|ê|î|ô|û))",
 		},
-		"strong vowel dieresis accented should translate to any acute accented vowel": {
+		"strong vowel dieresis accented should translate to any dieresis accented vowel": {
 			tokenizer.TokenVowelStrongDieresisAccented,
 			"(<v>|(ä|ë|ï|ö|ü))",
 		},
-		"weak vowel dieresis accented should translate to any acute accented vowel": {
+		"weak vowel dieresis accented should translate to any dieresis accented vowel": {
 			tokenizer.TokenVowelWeakDieresisAccented,
 			"(<v>|(ä|ë|ï|ö|ü))",
 		},
