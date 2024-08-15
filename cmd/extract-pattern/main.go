@@ -16,8 +16,11 @@ import (
 func main() {
 	opts := readOptionsOrFail()
 
-	extractPattern := commands.NewExtractPattern(transformer.NewNaiveTransformer())
-	pattern, err := extractPattern.Execute(opts.Name)
+	extractPatterns := commands.NewExtractPatterns(
+		transformer.NewNaiveTransformer(),
+		transformer.NewVowelProximityTransformer(),
+	)
+	patterns, err := extractPatterns.Execute(opts.Name)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -26,18 +29,21 @@ func main() {
 	var renderer Renderer
 	switch opts.NumberOfOutputsToGenerate {
 	case 0:
-		renderer = ui.NewTitleValueRenderer("PATTERN:", pattern)
+		renderer = ui.NewTitleValueRenderer("PATTERNS:", commaSeparatedValues(patterns))
 	default:
-		nameExamples, err := commands.GenerateExamples(pattern, opts.NumberOfOutputsToGenerate)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		renderer = new(ui.TwoColumnsTableBuilder).
+		table := new(ui.TwoColumnsTableBuilder).
 			WithMaxWidth(getTerminalWidth()).
-			WithTitles("PATTERN", "EXAMPLES").
-			WithRow(pattern, nameExamples).
-			Build()
+			WithTitles("PATTERN", "EXAMPLES")
+
+		for _, pattern := range patterns {
+			nameExamples, err := commands.GenerateExamples(pattern, opts.NumberOfOutputsToGenerate)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			table.WithRow(pattern, nameExamples)
+		}
+		renderer = table.Build()
 	}
 
 	fmt.Println(renderer.Render())
@@ -66,6 +72,17 @@ func getTerminalWidth() int {
 		totalMaxWidth = 80
 	}
 	return totalMaxWidth
+}
+
+func commaSeparatedValues(values []string) string {
+	valuesStr := ""
+	for i, value := range values {
+		valuesStr += value
+		if i < len(values)-1 {
+			valuesStr += ", "
+		}
+	}
+	return valuesStr
 }
 
 type Ops struct {
