@@ -1,9 +1,13 @@
 package transformer
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type Pattern interface {
 	String() string
+	Capitalize() string
 }
 
 type pattern struct {
@@ -12,6 +16,10 @@ type pattern struct {
 
 func (p *pattern) add(sequence patternSequence) {
 	p.sequences = append(p.sequences, sequence)
+}
+
+func (p *pattern) Capitalize() string {
+	return fmt.Sprintf("!%s", p.String())
 }
 
 func (p *pattern) String() string {

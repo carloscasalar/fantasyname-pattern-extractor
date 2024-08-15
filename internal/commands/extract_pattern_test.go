@@ -1,6 +1,7 @@
 package commands_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/carloscasalar/fantasyname-pattern-extractor/internal/commands"
@@ -21,11 +22,11 @@ func TestExtractPattern_should_return_the_transformed_tokens_patter_uppercased(t
 
 	require.NoError(t, err)
 	assert.Equal(t, firstLetterUppercasedPattern, resultingPattern)
-	assert.Equal(t, tokenFor("some name"), tokenSpy.tokensTransformed, "expected transformer had transformed teh tokens for the 'abc' string")
+	assert.Equal(t, tokensFor("some name"), tokenSpy.tokensTransformed, "expected first transformer had transformed the tokens using the 'some name' string")
 
 }
 
-func tokenFor(value string) *tokenizer.TokenChain {
+func tokensFor(value string) *tokenizer.TokenChain {
 	tokens, _ := tokenizer.Tokenize(value)
 	return tokens
 }
@@ -40,6 +41,10 @@ func newMockPattern(pattern string) mockPattern {
 
 func (p mockPattern) String() string {
 	return p.pattern
+}
+
+func (p mockPattern) Capitalize() string {
+	return fmt.Sprintf("!%s", p.pattern)
 }
 
 type tokenSpy struct {
