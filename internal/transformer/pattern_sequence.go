@@ -21,9 +21,12 @@ const (
 	sequenceVowelWeakCircumflexAccented   patternSequence = "(<v>|(î|û)|(î|û))"
 	sequenceVowelWeakDieresisAccented     patternSequence = "(<v>|(ï|ü)|(ï|ü))"
 
-	sequenceConsonant  patternSequence = "c"
-	sequenceTildeN     patternSequence = "(<c>|ñ)"
-	sequenceCedilla    patternSequence = "(<c>|ç)"
-	sequenceApostrophe patternSequence = "('|)"
-	sequenceHyphen     patternSequence = "(-|)"
+	sequenceConsonant         patternSequence = "c"
+	sequenceConsonantStarting patternSequence = "B"
+	sequenceTildeN            patternSequence = "(<c>|ñ)"
+	sequenceTildeNStarting    patternSequence = "(<B>|ñ)"
+	sequenceCedilla           patternSequence = "(<c>|ç)"
+	sequenceCedillaStarting   patternSequence = "(<B>|ç)"
+	sequenceApostrophe        patternSequence = "('|)"
+	sequenceHyphen            patternSequence = "(-|)"
 )

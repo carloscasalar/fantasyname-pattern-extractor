@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestVowelProximityTransformer_returns_a_pattern_for_each_token(t *testing.T) {
+func TestContextAwareTransformer_given_a_single_token(t *testing.T) {
 	testCases := map[string]struct {
 		tokenChain      tokenizer.Token
 		expectedPattern string
@@ -54,17 +54,17 @@ func TestVowelProximityTransformer_returns_a_pattern_for_each_token(t *testing.T
 			tokenizer.TokenVowelWeakDieresisAccented,
 			"(<v>|(ï|ü)|(ï|ü))",
 		},
-		"consonant at the beginning should translate to c": {
+		"consonant at the beginning should translate to B": {
 			tokenizer.TokenConsonant,
-			"c",
+			"B",
 		},
-		"tilde n at the beginning should translate to (<c>|ñ)": {
+		"tilde n at the beginning should translate to (<B>|ñ)": {
 			tokenizer.TokenTildeN,
-			"(<c>|ñ)",
+			"(<B>|ñ)",
 		},
-		"cedilla at the beginning should translate to (<c>|ç)": {
+		"cedilla at the beginning should translate to (<B>|ç)": {
 			tokenizer.TokenCedilla,
-			"(<c>|ç)",
+			"(<B>|ç)",
 		},
 		"apostrophe should translate to apostrophe or nothing('|)": {
 			tokenizer.TokenApostrophe,
@@ -79,7 +79,7 @@ func TestVowelProximityTransformer_returns_a_pattern_for_each_token(t *testing.T
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			tokenChain := tokenizer.NewTokenChain(tc.tokenChain)
-			naiveTransformer := transformer.NewVowelProximityTransformer()
+			naiveTransformer := transformer.NewContextAwareTransformer()
 
 			pattern := naiveTransformer.Transform(*tokenChain)
 
@@ -88,7 +88,7 @@ func TestVowelProximityTransformer_returns_a_pattern_for_each_token(t *testing.T
 	}
 }
 
-func TestVowelProximityTransformer_translates_several_tokens_to_a_sequence_of_vowel_proximity_patterns(t *testing.T) {
+func TestContextAwareTransformer_should_translate_the_token_sequence(t *testing.T) {
 	testCases := []struct {
 		tokens          []tokenizer.Token
 		expectedPattern string
@@ -103,13 +103,13 @@ func TestVowelProximityTransformer_translates_several_tokens_to_a_sequence_of_vo
 		},
 		{
 			[]tokenizer.Token{tokenizer.TokenCedilla, tokenizer.TokenVowelStrong, tokenizer.TokenApostrophe, tokenizer.TokenVowelWeakAcuteAccented},
-			"(<c>|ç)(<v>|(a|e|o)|(a|e|o))('|)(<v>|(í|ú)|(í|ú))",
+			"(<B>|ç)(<v>|(a|e|o)|(a|e|o))('|)(<v>|(í|ú)|(í|ú))",
 		},
 	}
 
 	for _, tc := range testCases {
-		t.Run(fmt.Sprintf("%v should translate to %v", commaSeparatedStr(tc.tokens), tc.expectedPattern), func(t *testing.T) {
-			naiveTransformer := transformer.NewVowelProximityTransformer()
+		t.Run(fmt.Sprintf("%v to %v", commaSeparatedStr(tc.tokens), tc.expectedPattern), func(t *testing.T) {
+			naiveTransformer := transformer.NewContextAwareTransformer()
 			tokenChain := tokenizer.NewTokenChain(tc.tokens...)
 
 			pattern := naiveTransformer.Transform(*tokenChain)
@@ -117,17 +117,4 @@ func TestVowelProximityTransformer_translates_several_tokens_to_a_sequence_of_vo
 			assert.Equal(t, tc.expectedPattern, pattern.String())
 		})
 	}
-}
-
-func commaSeparatedStr(tokens []tokenizer.Token) string {
-	commaSeparatedTokens := "[ "
-	for i, token := range tokens {
-		commaSeparatedTokens += token.String()
-		if i < len(tokens)-1 {
-			commaSeparatedTokens += ", "
-		}
-	}
-
-	commaSeparatedTokens += " ]"
-	return commaSeparatedTokens
 }
