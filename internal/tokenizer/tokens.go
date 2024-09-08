@@ -117,6 +117,7 @@ func withStrength(s strength) tokenVowelOption {
 	}
 }
 
+//go:generate stringer -type=tokenRoot -output=tokens_root_auto.go -trimprefix=root
 type tokenRoot int
 
 const (
@@ -129,23 +130,7 @@ const (
 	rootHyphen
 )
 
-func (t tokenRoot) String() string {
-	tokenStrings := map[tokenRoot]string{
-		rootUndefined:  "Undefined",
-		rootConsonant:  "Consonant",
-		rootTildeN:     "TildeN",
-		rootCedilla:    "Cedilla",
-		rootVowel:      "Vowel",
-		rootApostrophe: "Apostrophe",
-		rootHyphen:     "Hyphen",
-	}
-
-	if str, found := tokenStrings[t]; found {
-		return str
-	}
-	return "UndefinedToken"
-}
-
+//go:generate stringer -type=accent -output=tokens_accent_auto.go -trimprefix=accent
 type accent int
 
 const (
@@ -155,21 +140,6 @@ const (
 	accentCircumflex
 	accentDieresis
 )
-
-func (a accent) String() string {
-	accentStrings := map[accent]string{
-		accentNone:       "",
-		accentAcute:      "AcuteAccented",
-		accentGrave:      "GraveAccented",
-		accentCircumflex: "CircumflexAccented",
-		accentDieresis:   "DieresisAccented",
-	}
-
-	if str, found := accentStrings[a]; found {
-		return str
-	}
-	return "UndefinedAccent"
-}
 
 type strength int
 
